@@ -40,6 +40,7 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
         ],
 
         // === TypeScript ===
+        "@typescript-eslint/no-unnecessary-condition": "error",
         "@typescript-eslint/no-unused-vars": [
           "error",
           { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },

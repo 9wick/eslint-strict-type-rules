@@ -17,6 +17,16 @@ function createESLint(configs: Linter.Config[]) {
     overrideConfig: [
       // TypeScript parserを有効化
       ...tseslint.configs.recommended as Linter.Config[],
+      // typed linting (no-unnecessary-condition等に必要)
+      {
+        languageOptions: {
+          parserOptions: {
+            projectService: {
+              allowDefaultProject: ["src/*.ts", "src/*.tsx", "src/__tests__/*.ts"],
+            },
+          },
+        },
+      },
       // sonarjs plugin登録
       {
         plugins: {
@@ -197,7 +207,7 @@ describe("E2E: no-cross-directory-lib-import", () => {
   it("should report error for re-export from cross-directory lib", async () => {
     const results = await eslint.lintText(
       'export { foo } from "../other/utils.lib";\n',
-      { filePath: "src/index.ts" },
+      { filePath: "src/barrel.ts" },
     );
     const messages = results[0].messages;
     expect(
