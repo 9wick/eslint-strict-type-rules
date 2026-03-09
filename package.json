@@ -1,0 +1,72 @@
+{
+  "name": "@9wick/eslint-plugin-strict-type-rules",
+  "version": "0.1.0",
+  "description": "ESLint plugin with the strictest TypeScript rules for neverthrow, type safety, and code quality",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build"
+  },
+  "peerDependencies": {
+    "eslint": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
+    "eslint-plugin-import-x": "^4.0.0",
+    "eslint-plugin-sonarjs": "^2.0.0 || ^3.0.0",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.0.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.0"
+  },
+  "peerDependenciesMeta": {
+    "eslint-plugin-react": {
+      "optional": true
+    },
+    "eslint-plugin-react-hooks": {
+      "optional": true
+    },
+    "eslint-plugin-react-refresh": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
+    "@typescript-eslint/rule-tester": "^8.29.0",
+    "@typescript-eslint/utils": "^8.29.0",
+    "eslint": "^9.24.0",
+    "eslint-plugin-import-x": "^4.6.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "eslint-plugin-sonarjs": "^3.0.5",
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.29.0",
+    "vitest": "^3.0.0"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "typescript",
+    "neverthrow",
+    "strict",
+    "type-safety"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}
