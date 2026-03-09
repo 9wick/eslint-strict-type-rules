@@ -77,7 +77,7 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
     },
     {
       name: "@9wick/strict-type-rules/base/logger",
-      files: ["**/logger*.{ts,tsx,js,jsx}"],
+      files: ["**/*[lL]ogger*.{ts,tsx,js,jsx}"],
       rules: {
         "no-console": "off",
       },

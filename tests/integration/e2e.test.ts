@@ -171,7 +171,7 @@ describe("E2E: base config logger relaxation", () => {
   it("should allow console.log in logger files", async () => {
     const results = await eslint.lintText(
       'console.log("hello");\n',
-      { filePath: "src/logger.ts" },
+      { filePath: "src/appLogger.ts" },
     );
     const messages = results[0].messages;
     expect(messages.some((m) => m.ruleId === "no-console")).toBe(false);

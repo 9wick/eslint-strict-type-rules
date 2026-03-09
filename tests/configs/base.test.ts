@@ -89,7 +89,7 @@ describe("base config", () => {
 
   it("should allow no-console in logger files", () => {
     const loggerConfig = plugin.configs.base[1];
-    expect(loggerConfig.files).toEqual(["**/logger*.{ts,tsx,js,jsx}"]);
+    expect(loggerConfig.files).toEqual(["**/*[lL]ogger*.{ts,tsx,js,jsx}"]);
     expect(loggerConfig.rules!["no-console"]).toBe("off");
   });
 
