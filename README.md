@@ -22,13 +22,15 @@ pnpm add -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-re
 
 ## Usage
 
+> **Note:** `no-unnecessary-condition` は typed linting が必要です。`parserOptions.projectService: true` の設定（`tseslint.configs.recommendedTypeChecked` 等）を推奨します。
+
 ```js
 // eslint.config.mjs
 import tseslint from "typescript-eslint";
 import strictTypes from "@9wick/eslint-plugin-strict-type-rules";
 
 export default tseslint.config(
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   ...strictTypes.configs.recommended,
 );
 ```
@@ -37,7 +39,7 @@ export default tseslint.config(
 
 ```js
 export default tseslint.config(
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   ...strictTypes.configs.recommended,
   ...strictTypes.configs.react,
 );
@@ -47,7 +49,7 @@ export default tseslint.config(
 
 ```js
 export default tseslint.config(
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   ...strictTypes.configs.recommended,
   ...strictTypes.configs.test,    // .test.ts で throw/try-catch 等を許可
   ...strictTypes.configs.barrel,  // index.ts を re-export のみに制限
@@ -60,7 +62,7 @@ export default tseslint.config(
 
 ```js
 export default tseslint.config(
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   ...strictTypes.configs.recommended,
   {
     rules: {
@@ -76,7 +78,7 @@ export default tseslint.config(
 
 ```js
 export default tseslint.config(
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   ...strictTypes.configs.recommended,
   {
     files: ["**/*.lib.{ts,tsx}"],
@@ -137,4 +139,5 @@ export default tseslint.config(
 | `import-x/no-cycle` | error |
 | `import-x/order` | グループ間改行必須 |
 | `import-x/no-namespace` | error |
+| `@typescript-eslint/no-unnecessary-condition` | error (要 typed linting) |
 | `@eslint-community/eslint-comments/no-use` | allow: [] |
