@@ -121,8 +121,9 @@ export default tseslint.config(
 |------|------|
 | `no-empty-select-value` | `<SelectItem value="">` 等の空 value を禁止 |
 | `no-vitest-resolve-alias` | vitest.config の `resolve.alias` を禁止 |
-| `no-exported-callable` | DI モジュールからの関数 export を禁止（`*.*.{ts,tsx}` のみ） |
-| `require-injectable-class` | DI モジュールに `@injectable` class を要求（`*.*.{ts,tsx}` のみ） |
+| `no-cross-directory-lib-import` | `.lib` ファイルの同フォルダ外 import を禁止 |
+| `no-exported-callable` | DI モジュールからの関数 export を禁止（`*.*.{ts,tsx}` のみ、`*.lib.*` 除外） |
+| `require-injectable-class` | DI モジュールに `@injectable` class を要求（`*.*.{ts,tsx}` のみ、`*.lib.*` 除外） |
 
 ### Built-in Rules (base config)
 

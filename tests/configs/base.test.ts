@@ -11,8 +11,8 @@ describe("plugin structure", () => {
     expect(plugin.meta!.version).toBe("0.1.0");
   });
 
-  it("should export 15 custom rules", () => {
-    expect(Object.keys(plugin.rules!)).toHaveLength(15);
+  it("should export 16 custom rules", () => {
+    expect(Object.keys(plugin.rules!)).toHaveLength(16);
     // Strict syntax rules (11)
     expect(plugin.rules).toHaveProperty("no-throw");
     expect(plugin.rules).toHaveProperty("no-try-catch");
@@ -25,7 +25,8 @@ describe("plugin structure", () => {
     expect(plugin.rules).toHaveProperty("no-promise-reject");
     expect(plugin.rules).toHaveProperty("no-process-access");
     expect(plugin.rules).toHaveProperty("no-unsafe-unwrap");
-    // Other custom rules (4)
+    // Other custom rules (5)
+    expect(plugin.rules).toHaveProperty("no-cross-directory-lib-import");
     expect(plugin.rules).toHaveProperty("no-empty-select-value");
     expect(plugin.rules).toHaveProperty("no-vitest-resolve-alias");
     expect(plugin.rules).toHaveProperty("no-exported-callable");
@@ -67,7 +68,10 @@ describe("base config", () => {
     expect(rules["@9wick/strict-type-rules/no-promise-reject"]).toBe("error");
     expect(rules["@9wick/strict-type-rules/no-process-access"]).toBe("error");
     expect(rules["@9wick/strict-type-rules/no-unsafe-unwrap"]).toBe("error");
-    // Other custom rules (2, DI rules are in separate entry)
+    // Other custom rules (3, DI rules are in separate entry)
+    expect(rules["@9wick/strict-type-rules/no-cross-directory-lib-import"]).toBe(
+      "error",
+    );
     expect(rules["@9wick/strict-type-rules/no-empty-select-value"]).toBe(
       "error",
     );
@@ -87,6 +91,7 @@ describe("base config", () => {
     const diConfig = plugin.configs.base[1];
     expect(diConfig.name).toBe("@9wick/strict-type-rules/base/di");
     expect(diConfig.files).toEqual(["**/*.*.{ts,tsx}"]);
+    expect(diConfig.ignores).toEqual(["**/*.lib.{ts,tsx}"]);
     expect(diConfig.rules!["@9wick/strict-type-rules/no-exported-callable"]).toBe(
       "error",
     );

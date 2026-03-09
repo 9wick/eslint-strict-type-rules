@@ -1,5 +1,6 @@
 import noAngleAssertion from "./no-angle-assertion.js";
 import noAsAssertion from "./no-as-assertion.js";
+import noCrossDirectoryLibImport from "./no-cross-directory-lib-import.js";
 import noEmptySelectValue from "./no-empty-select-value.js";
 import noExportedCallable from "./no-exported-callable.js";
 import noInOperator from "./no-in-operator.js";
@@ -17,6 +18,7 @@ import requireInjectableClass from "./require-injectable-class.js";
 export const rules = {
   "no-angle-assertion": noAngleAssertion,
   "no-as-assertion": noAsAssertion,
+  "no-cross-directory-lib-import": noCrossDirectoryLibImport,
   "no-empty-select-value": noEmptySelectValue,
   "no-exported-callable": noExportedCallable,
   "no-in-operator": noInOperator,

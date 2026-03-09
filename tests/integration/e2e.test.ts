@@ -165,6 +165,49 @@ describe("E2E: base config", () => {
   });
 });
 
+describe("E2E: no-cross-directory-lib-import", () => {
+  const eslint = createESLint(plugin.configs.base);
+
+  it("should allow same-directory lib import", async () => {
+    const results = await eslint.lintText(
+      'import { foo } from "./utils.lib";\n',
+      { filePath: "src/service.ts" },
+    );
+    const messages = results[0].messages;
+    expect(
+      messages.some((m) =>
+        m.ruleId === "@9wick/strict-type-rules/no-cross-directory-lib-import",
+      ),
+    ).toBe(false);
+  });
+
+  it("should report error for cross-directory lib import", async () => {
+    const results = await eslint.lintText(
+      'import { foo } from "../other/utils.lib";\n',
+      { filePath: "src/service.ts" },
+    );
+    const messages = results[0].messages;
+    expect(
+      messages.some((m) =>
+        m.ruleId === "@9wick/strict-type-rules/no-cross-directory-lib-import",
+      ),
+    ).toBe(true);
+  });
+
+  it("should report error for re-export from cross-directory lib", async () => {
+    const results = await eslint.lintText(
+      'export { foo } from "../other/utils.lib";\n',
+      { filePath: "src/index.ts" },
+    );
+    const messages = results[0].messages;
+    expect(
+      messages.some((m) =>
+        m.ruleId === "@9wick/strict-type-rules/no-cross-directory-lib-import",
+      ),
+    ).toBe(true);
+  });
+});
+
 describe("E2E: base config DI rules scoping", () => {
   const eslint = createESLint(plugin.configs.base);
 
@@ -179,6 +222,19 @@ describe("E2E: base config DI rules scoping", () => {
         m.ruleId === "@9wick/strict-type-rules/no-exported-callable",
       ),
     ).toBe(true);
+  });
+
+  it("should not report DI error in .lib.ts files", async () => {
+    const results = await eslint.lintText(
+      'export function doSomething() { return 1; }\n',
+      { filePath: "src/utils.lib.ts" },
+    );
+    const messages = results[0].messages;
+    expect(
+      messages.some((m) =>
+        m.ruleId === "@9wick/strict-type-rules/no-exported-callable",
+      ),
+    ).toBe(false);
   });
 
   it("should not report DI error in plain files", async () => {

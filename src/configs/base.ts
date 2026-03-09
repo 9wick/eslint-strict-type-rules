@@ -24,6 +24,7 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
         // === Other Custom Rules ===
         "@9wick/strict-type-rules/no-empty-select-value": "error",
         "@9wick/strict-type-rules/no-vitest-resolve-alias": "error",
+        "@9wick/strict-type-rules/no-cross-directory-lib-import": "error",
 
         // === Complexity ===
         complexity: ["error", { max: 7 }],
@@ -76,6 +77,7 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
     {
       name: "@9wick/strict-type-rules/base/di",
       files: ["**/*.*.{ts,tsx}"],
+      ignores: ["**/*.lib.{ts,tsx}"],
       plugins: {
         "@9wick/strict-type-rules": plugin,
       },
