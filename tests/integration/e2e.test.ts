@@ -165,6 +165,28 @@ describe("E2E: base config", () => {
   });
 });
 
+describe("E2E: base config logger relaxation", () => {
+  const eslint = createESLint(plugin.configs.base);
+
+  it("should allow console.log in logger files", async () => {
+    const results = await eslint.lintText(
+      'console.log("hello");\n',
+      { filePath: "src/logger.ts" },
+    );
+    const messages = results[0].messages;
+    expect(messages.some((m) => m.ruleId === "no-console")).toBe(false);
+  });
+
+  it("should still report no-console in non-logger files", async () => {
+    const results = await eslint.lintText(
+      'console.log("hello");\n',
+      { filePath: "src/service.ts" },
+    );
+    const messages = results[0].messages;
+    expect(messages.some((m) => m.ruleId === "no-console")).toBe(true);
+  });
+});
+
 describe("E2E: test config relaxation", () => {
   const eslint = createESLint([
     ...plugin.configs.base,

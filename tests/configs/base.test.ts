@@ -43,9 +43,9 @@ describe("plugin structure", () => {
 });
 
 describe("base config", () => {
-  it("should be a non-empty array", () => {
+  it("should have 2 config entries", () => {
     expect(Array.isArray(plugin.configs.base)).toBe(true);
-    expect(plugin.configs.base.length).toBeGreaterThan(0);
+    expect(plugin.configs.base).toHaveLength(2);
   });
 
   it("should include plugin in plugins", () => {
@@ -85,6 +85,12 @@ describe("base config", () => {
   it("should not use no-restricted-syntax in base config", () => {
     const rules = plugin.configs.base[0].rules!;
     expect(rules["no-restricted-syntax"]).toBeUndefined();
+  });
+
+  it("should allow no-console in logger files", () => {
+    const loggerConfig = plugin.configs.base[1];
+    expect(loggerConfig.files).toEqual(["**/logger*.{ts,tsx,js,jsx}"]);
+    expect(loggerConfig.rules!["no-console"]).toBe("off");
   });
 
   it("should set complexity to max 7", () => {
