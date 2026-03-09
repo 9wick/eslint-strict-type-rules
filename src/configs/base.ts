@@ -40,7 +40,6 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
         ],
 
         // === TypeScript ===
-        "@typescript-eslint/no-unnecessary-condition": "error",
         "@typescript-eslint/no-unused-vars": [
           "error",
           { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
@@ -73,6 +72,13 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
           "error",
           { allow: [] as string[] },
         ],
+      },
+    },
+    {
+      name: "@9wick/strict-type-rules/base/type-checked",
+      files: ["**/*.{ts,tsx}"],
+      rules: {
+        "@typescript-eslint/no-unnecessary-condition": "error",
       },
     },
     {

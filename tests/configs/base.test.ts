@@ -44,9 +44,9 @@ describe("plugin structure", () => {
 });
 
 describe("base config", () => {
-  it("should have 3 config entries", () => {
+  it("should have 4 config entries", () => {
     expect(Array.isArray(plugin.configs.base)).toBe(true);
-    expect(plugin.configs.base).toHaveLength(3);
+    expect(plugin.configs.base).toHaveLength(4);
   });
 
   it("should include plugin in plugins", () => {
@@ -87,8 +87,15 @@ describe("base config", () => {
     ).toBeUndefined();
   });
 
+  it("should scope type-checked rules to ts/tsx files", () => {
+    const typeCheckedConfig = plugin.configs.base[1];
+    expect(typeCheckedConfig.name).toBe("@9wick/strict-type-rules/base/type-checked");
+    expect(typeCheckedConfig.files).toEqual(["**/*.{ts,tsx}"]);
+    expect(typeCheckedConfig.rules!["@typescript-eslint/no-unnecessary-condition"]).toBe("error");
+  });
+
   it("should scope DI rules to sub-extension files only", () => {
-    const diConfig = plugin.configs.base[1];
+    const diConfig = plugin.configs.base[2];
     expect(diConfig.name).toBe("@9wick/strict-type-rules/base/di");
     expect(diConfig.files).toEqual(["**/*.*.{ts,tsx}"]);
     expect(diConfig.ignores).toEqual(["**/*.lib.{ts,tsx}"]);
@@ -106,7 +113,7 @@ describe("base config", () => {
   });
 
   it("should allow no-console in logger files", () => {
-    const loggerConfig = plugin.configs.base[2];
+    const loggerConfig = plugin.configs.base[3];
     expect(loggerConfig.files).toEqual(["**/*[lL]ogger*.{ts,tsx,js,jsx}"]);
     expect(loggerConfig.rules!["no-console"]).toBe("off");
   });
