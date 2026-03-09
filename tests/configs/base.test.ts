@@ -11,9 +11,9 @@ describe("plugin structure", () => {
     expect(plugin.meta!.version).toBe("0.1.0");
   });
 
-  it("should export 14 custom rules", () => {
-    expect(Object.keys(plugin.rules!)).toHaveLength(14);
-    // Strict syntax rules (10)
+  it("should export 15 custom rules", () => {
+    expect(Object.keys(plugin.rules!)).toHaveLength(15);
+    // Strict syntax rules (11)
     expect(plugin.rules).toHaveProperty("no-throw");
     expect(plugin.rules).toHaveProperty("no-try-catch");
     expect(plugin.rules).toHaveProperty("no-promise-result");
@@ -24,6 +24,7 @@ describe("plugin structure", () => {
     expect(plugin.rules).toHaveProperty("no-object-has-own");
     expect(plugin.rules).toHaveProperty("no-promise-reject");
     expect(plugin.rules).toHaveProperty("no-process-access");
+    expect(plugin.rules).toHaveProperty("no-unsafe-unwrap");
     // Other custom rules (4)
     expect(plugin.rules).toHaveProperty("no-empty-select-value");
     expect(plugin.rules).toHaveProperty("no-vitest-resolve-alias");
@@ -52,9 +53,9 @@ describe("base config", () => {
     expect(config.plugins).toHaveProperty("@9wick/strict-type-rules");
   });
 
-  it("should include all 14 custom rules as error", () => {
+  it("should include all 15 custom rules as error", () => {
     const rules = plugin.configs.base[0].rules!;
-    // Strict syntax rules (10)
+    // Strict syntax rules (11)
     expect(rules["@9wick/strict-type-rules/no-throw"]).toBe("error");
     expect(rules["@9wick/strict-type-rules/no-try-catch"]).toBe("error");
     expect(rules["@9wick/strict-type-rules/no-promise-result"]).toBe("error");
@@ -65,6 +66,7 @@ describe("base config", () => {
     expect(rules["@9wick/strict-type-rules/no-object-has-own"]).toBe("error");
     expect(rules["@9wick/strict-type-rules/no-promise-reject"]).toBe("error");
     expect(rules["@9wick/strict-type-rules/no-process-access"]).toBe("error");
+    expect(rules["@9wick/strict-type-rules/no-unsafe-unwrap"]).toBe("error");
     // Other custom rules (4)
     expect(rules["@9wick/strict-type-rules/no-empty-select-value"]).toBe(
       "error",
@@ -179,6 +181,7 @@ describe("test config", () => {
     expect(rules["@9wick/strict-type-rules/no-nested-and-then"]).toBe("off");
     expect(rules["@9wick/strict-type-rules/no-promise-reject"]).toBe("off");
     expect(rules["@9wick/strict-type-rules/no-process-access"]).toBe("off");
+    expect(rules["@9wick/strict-type-rules/no-unsafe-unwrap"]).toBe("off");
     // no-promise-result is NOT turned off (inherited from base)
     expect(
       rules["@9wick/strict-type-rules/no-promise-result"],

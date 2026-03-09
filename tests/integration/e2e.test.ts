@@ -133,6 +133,28 @@ describe("E2E: base config", () => {
     ).toBe(true);
   });
 
+  it("should report error for _unsafeUnwrap", async () => {
+    const results = await eslint.lintText(
+      'const x = result._unsafeUnwrap();\n',
+      { filePath: "src/test.ts" },
+    );
+    const messages = results[0].messages;
+    expect(
+      messages.some((m) => m.message.includes("_unsafeUnwrap")),
+    ).toBe(true);
+  });
+
+  it("should report error for _unsafeUnwrapErr", async () => {
+    const results = await eslint.lintText(
+      'const x = result._unsafeUnwrapErr();\n',
+      { filePath: "src/test.ts" },
+    );
+    const messages = results[0].messages;
+    expect(
+      messages.some((m) => m.message.includes("_unsafeUnwrap")),
+    ).toBe(true);
+  });
+
   it("should report error for no-console", async () => {
     const results = await eslint.lintText(
       'console.log("hello");\n',

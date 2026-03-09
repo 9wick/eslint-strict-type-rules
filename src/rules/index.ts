@@ -10,6 +10,7 @@ import noPromiseReject from "./no-promise-reject.js";
 import noPromiseResult from "./no-promise-result.js";
 import noThrow from "./no-throw.js";
 import noTryCatch from "./no-try-catch.js";
+import noUnsafeUnwrap from "./no-unsafe-unwrap.js";
 import noVitestResolveAlias from "./no-vitest-resolve-alias.js";
 import requireInjectableClass from "./require-injectable-class.js";
 
@@ -26,6 +27,7 @@ export const rules = {
   "no-promise-result": noPromiseResult,
   "no-throw": noThrow,
   "no-try-catch": noTryCatch,
+  "no-unsafe-unwrap": noUnsafeUnwrap,
   "no-vitest-resolve-alias": noVitestResolveAlias,
   "require-injectable-class": requireInjectableClass,
 };

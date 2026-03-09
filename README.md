@@ -97,6 +97,7 @@ export default tseslint.config(
 | `no-object-has-own` | `Object.hasOwn` を禁止。ts-pattern の `match` を使用 |
 | `no-promise-reject` | `Promise.reject` を禁止。neverthrow の `errAsync` を使用 |
 | `no-process-access` | `process.*` への直接アクセスを禁止。DI / 設定オブジェクト経由でアクセス |
+| `no-unsafe-unwrap` | `_unsafeUnwrap` / `_unsafeUnwrapErr` を禁止。`match` や `andThen` を使用 |
 
 ### Other Rules
 
