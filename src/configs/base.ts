@@ -24,8 +24,6 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
         // === Other Custom Rules ===
         "@9wick/strict-type-rules/no-empty-select-value": "error",
         "@9wick/strict-type-rules/no-vitest-resolve-alias": "error",
-        "@9wick/strict-type-rules/no-exported-callable": "error",
-        "@9wick/strict-type-rules/require-injectable-class": "error",
 
         // === Complexity ===
         complexity: ["error", { max: 7 }],
@@ -73,6 +71,17 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
           "error",
           { allow: [] as string[] },
         ],
+      },
+    },
+    {
+      name: "@9wick/strict-type-rules/base/di",
+      files: ["**/*.*.{ts,tsx}"],
+      plugins: {
+        "@9wick/strict-type-rules": plugin,
+      },
+      rules: {
+        "@9wick/strict-type-rules/no-exported-callable": "error",
+        "@9wick/strict-type-rules/require-injectable-class": "error",
       },
     },
     {

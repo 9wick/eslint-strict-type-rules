@@ -43,9 +43,9 @@ describe("plugin structure", () => {
 });
 
 describe("base config", () => {
-  it("should have 2 config entries", () => {
+  it("should have 3 config entries", () => {
     expect(Array.isArray(plugin.configs.base)).toBe(true);
-    expect(plugin.configs.base).toHaveLength(2);
+    expect(plugin.configs.base).toHaveLength(3);
   });
 
   it("should include plugin in plugins", () => {
@@ -53,7 +53,7 @@ describe("base config", () => {
     expect(config.plugins).toHaveProperty("@9wick/strict-type-rules");
   });
 
-  it("should include all 15 custom rules as error", () => {
+  it("should include non-DI custom rules as error in main entry", () => {
     const rules = plugin.configs.base[0].rules!;
     // Strict syntax rules (11)
     expect(rules["@9wick/strict-type-rules/no-throw"]).toBe("error");
@@ -67,17 +67,30 @@ describe("base config", () => {
     expect(rules["@9wick/strict-type-rules/no-promise-reject"]).toBe("error");
     expect(rules["@9wick/strict-type-rules/no-process-access"]).toBe("error");
     expect(rules["@9wick/strict-type-rules/no-unsafe-unwrap"]).toBe("error");
-    // Other custom rules (4)
+    // Other custom rules (2, DI rules are in separate entry)
     expect(rules["@9wick/strict-type-rules/no-empty-select-value"]).toBe(
       "error",
     );
     expect(rules["@9wick/strict-type-rules/no-vitest-resolve-alias"]).toBe(
       "error",
     );
-    expect(rules["@9wick/strict-type-rules/no-exported-callable"]).toBe(
+    // DI rules should NOT be in main entry
+    expect(
+      rules["@9wick/strict-type-rules/no-exported-callable"],
+    ).toBeUndefined();
+    expect(
+      rules["@9wick/strict-type-rules/require-injectable-class"],
+    ).toBeUndefined();
+  });
+
+  it("should scope DI rules to sub-extension files only", () => {
+    const diConfig = plugin.configs.base[1];
+    expect(diConfig.name).toBe("@9wick/strict-type-rules/base/di");
+    expect(diConfig.files).toEqual(["**/*.*.{ts,tsx}"]);
+    expect(diConfig.rules!["@9wick/strict-type-rules/no-exported-callable"]).toBe(
       "error",
     );
-    expect(rules["@9wick/strict-type-rules/require-injectable-class"]).toBe(
+    expect(diConfig.rules!["@9wick/strict-type-rules/require-injectable-class"]).toBe(
       "error",
     );
   });
@@ -88,7 +101,7 @@ describe("base config", () => {
   });
 
   it("should allow no-console in logger files", () => {
-    const loggerConfig = plugin.configs.base[1];
+    const loggerConfig = plugin.configs.base[2];
     expect(loggerConfig.files).toEqual(["**/*[lL]ogger*.{ts,tsx,js,jsx}"]);
     expect(loggerConfig.rules!["no-console"]).toBe("off");
   });

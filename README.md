@@ -65,6 +65,22 @@ export default tseslint.config(
   {
     rules: {
       "@9wick/strict-type-rules/no-throw": "off",
+    },
+  },
+);
+```
+
+### DI ルールのスコープ
+
+`no-exported-callable` / `require-injectable-class` は sub-extension 付きファイル（`*.service.ts`, `*.controller.ts` 等）にのみ適用されます。特定の sub-extension を除外するには:
+
+```js
+export default tseslint.config(
+  ...tseslint.configs.recommended,
+  ...strictTypes.configs.recommended,
+  {
+    files: ["**/*.lib.{ts,tsx}"],
+    rules: {
       "@9wick/strict-type-rules/no-exported-callable": "off",
       "@9wick/strict-type-rules/require-injectable-class": "off",
     },
@@ -105,8 +121,8 @@ export default tseslint.config(
 |------|------|
 | `no-empty-select-value` | `<SelectItem value="">` 等の空 value を禁止 |
 | `no-vitest-resolve-alias` | vitest.config の `resolve.alias` を禁止 |
-| `no-exported-callable` | DI モジュールからの関数 export を禁止 |
-| `require-injectable-class` | DI モジュールに `@injectable` class を要求 |
+| `no-exported-callable` | DI モジュールからの関数 export を禁止（`*.*.{ts,tsx}` のみ） |
+| `require-injectable-class` | DI モジュールに `@injectable` class を要求（`*.*.{ts,tsx}` のみ） |
 
 ### Built-in Rules (base config)
 

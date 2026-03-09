@@ -165,6 +165,36 @@ describe("E2E: base config", () => {
   });
 });
 
+describe("E2E: base config DI rules scoping", () => {
+  const eslint = createESLint(plugin.configs.base);
+
+  it("should report DI error in sub-extension files", async () => {
+    const results = await eslint.lintText(
+      'export function doSomething() { return 1; }\n',
+      { filePath: "src/user.service.ts" },
+    );
+    const messages = results[0].messages;
+    expect(
+      messages.some((m) =>
+        m.ruleId === "@9wick/strict-type-rules/no-exported-callable",
+      ),
+    ).toBe(true);
+  });
+
+  it("should not report DI error in plain files", async () => {
+    const results = await eslint.lintText(
+      'export function doSomething() { return 1; }\n',
+      { filePath: "src/utils.ts" },
+    );
+    const messages = results[0].messages;
+    expect(
+      messages.some((m) =>
+        m.ruleId === "@9wick/strict-type-rules/no-exported-callable",
+      ),
+    ).toBe(false);
+  });
+});
+
 describe("E2E: base config logger relaxation", () => {
   const eslint = createESLint(plugin.configs.base);
 
