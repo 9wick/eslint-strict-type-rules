@@ -177,3 +177,54 @@ export default tseslint.config(
 | `import-x/no-namespace` | error |
 | `@typescript-eslint/no-unnecessary-condition` | error (要 typed linting) |
 | `@eslint-community/eslint-comments/no-use` | allow: [] |
+
+## prepush-hash
+
+prepush チェック（lint, build, test 等）の完了を hash で記録し、commit 時に検証する CLI ツール。
+
+### Setup
+
+[lefthook](https://github.com/evilmartians/lefthook) と組み合わせて使います。
+
+```bash
+pnpm add -D lefthook
+```
+
+`lefthook.yml`:
+
+```yaml
+pre-commit:
+  commands:
+    prepush-check:
+      run: npx prepush-hash check
+
+prepare-commit-msg:
+  commands:
+    prepush-footer:
+      run: npx prepush-hash verify-footer {1} {2}
+```
+
+`package.json` に prepush スクリプトを追加:
+
+```json
+{
+  "scripts": {
+    "prepush": "pnpm lint && pnpm build && pnpm test && npx prepush-hash save"
+  }
+}
+```
+
+### Workflow
+
+1. `pnpm prepush` — 全チェック実行後、hash を `.prepush-hash` に保存
+2. `git commit` — pre-commit hook が hash を検証。不一致なら commit をブロック
+3. commit message に `Verified: prepush ✓ (hash)` footer が自動追記
+
+### CLI Commands
+
+| コマンド | 説明 |
+|---------|------|
+| `prepush-hash save` | hash を計算して `.prepush-hash` に保存 |
+| `prepush-hash check` | 保存済み hash と現在の hash を比較（不一致で exit 1） |
+| `prepush-hash compute` | hash を stdout に出力 |
+| `prepush-hash verify-footer <file> [source]` | commit message に Verified footer を追記 |
