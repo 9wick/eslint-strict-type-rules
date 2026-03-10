@@ -8,6 +8,7 @@ import noNestedAndThen from "./no-nested-and-then.js";
 import noObjectHasOwn from "./no-object-has-own.js";
 import noProcessAccess from "./no-process-access.js";
 import noPromiseReject from "./no-promise-reject.js";
+import noSwitchStatement from "./no-switch-statement.js";
 import noPromiseResult from "./no-promise-result.js";
 import noThrow from "./no-throw.js";
 import noTryCatch from "./no-try-catch.js";
@@ -27,6 +28,7 @@ export const rules = {
   "no-process-access": noProcessAccess,
   "no-promise-reject": noPromiseReject,
   "no-promise-result": noPromiseResult,
+  "no-switch-statement": noSwitchStatement,
   "no-throw": noThrow,
   "no-try-catch": noTryCatch,
   "no-unsafe-unwrap": noUnsafeUnwrap,

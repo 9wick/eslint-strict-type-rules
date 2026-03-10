@@ -20,6 +20,7 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
         "@9wick/strict-type-rules/no-promise-reject": "error",
         "@9wick/strict-type-rules/no-process-access": "error",
         "@9wick/strict-type-rules/no-unsafe-unwrap": "error",
+        "@9wick/strict-type-rules/no-switch-statement": "error",
 
         // === Other Custom Rules ===
         "@9wick/strict-type-rules/no-empty-select-value": "error",

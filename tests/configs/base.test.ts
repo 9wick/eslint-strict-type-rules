@@ -11,9 +11,9 @@ describe("plugin structure", () => {
     expect(plugin.meta!.version).toBe("0.1.0");
   });
 
-  it("should export 16 custom rules", () => {
-    expect(Object.keys(plugin.rules!)).toHaveLength(16);
-    // Strict syntax rules (11)
+  it("should export 17 custom rules", () => {
+    expect(Object.keys(plugin.rules!)).toHaveLength(17);
+    // Strict syntax rules (12)
     expect(plugin.rules).toHaveProperty("no-throw");
     expect(plugin.rules).toHaveProperty("no-try-catch");
     expect(plugin.rules).toHaveProperty("no-promise-result");
@@ -25,6 +25,7 @@ describe("plugin structure", () => {
     expect(plugin.rules).toHaveProperty("no-promise-reject");
     expect(plugin.rules).toHaveProperty("no-process-access");
     expect(plugin.rules).toHaveProperty("no-unsafe-unwrap");
+    expect(plugin.rules).toHaveProperty("no-switch-statement");
     // Other custom rules (5)
     expect(plugin.rules).toHaveProperty("no-cross-directory-lib-import");
     expect(plugin.rules).toHaveProperty("no-empty-select-value");
@@ -68,6 +69,7 @@ describe("base config", () => {
     expect(rules["@9wick/strict-type-rules/no-promise-reject"]).toBe("error");
     expect(rules["@9wick/strict-type-rules/no-process-access"]).toBe("error");
     expect(rules["@9wick/strict-type-rules/no-unsafe-unwrap"]).toBe("error");
+    expect(rules["@9wick/strict-type-rules/no-switch-statement"]).toBe("error");
     // Other custom rules (3, DI rules are in separate entry)
     expect(rules["@9wick/strict-type-rules/no-cross-directory-lib-import"]).toBe(
       "error",
