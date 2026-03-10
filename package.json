@@ -7,12 +7,14 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./tsconfig/strictest.json": "./tsconfig/strictest.json"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "tsconfig"
   ],
   "scripts": {
     "build": "tsup",

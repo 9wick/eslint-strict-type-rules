@@ -1,6 +1,6 @@
 # @9wick/eslint-plugin-strict-type-rules
 
-neverthrow / 型安全性 / コード品質のための厳格な ESLint ルールセット。
+neverthrow / 型安全性 / コード品質のための厳格な ESLint ルールセット + TypeScript 最厳格設定。
 
 ## Install
 
@@ -19,6 +19,42 @@ React を使う場合:
 ```bash
 pnpm add -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh
 ```
+
+## TSConfig
+
+最厳格な TypeScript コンパイラ設定を提供します。
+
+```json
+// tsconfig.json
+{
+  "extends": "@9wick/eslint-plugin-strict-type-rules/tsconfig/strictest.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "./dist"
+  }
+}
+```
+
+### 含まれるオプション
+
+| カテゴリ | オプション | 説明 |
+|---------|-----------|------|
+| **strict** | `strict: true` | 8個の厳格チェックを一括有効化 |
+| **型安全性** | `noUncheckedIndexedAccess` | インデックスアクセスに `undefined` を追加 |
+| | `exactOptionalPropertyTypes` | `?` プロパティへの暗黙的 `undefined` 代入を禁止 |
+| | `noPropertyAccessFromIndexSignature` | Record 型のドットアクセスを禁止 |
+| **制御フロー** | `noImplicitOverride` | `override` キーワードの明示を強制 |
+| | `noFallthroughCasesInSwitch` | switch フォールスルーを禁止 |
+| | `noImplicitReturns` | void 以外の関数の暗黙 return を禁止 |
+| | `allowUnusedLabels: false` | 未使用ラベルをエラー |
+| | `allowUnreachableCode: false` | 到達不能コードをエラー |
+| **モジュール** | `isolatedModules` | ファイル単位トランスパイル互換を強制 |
+| | `verbatimModuleSyntax` | `import type` の明示を強制 |
+| | `erasableSyntaxOnly` | enum / namespace を禁止（TS 5.8+） |
+
+> **Note:** `noUnusedLocals` / `noUnusedParameters` は ESLint 側で制御するため意図的に除外しています。
 
 ## Usage
 
