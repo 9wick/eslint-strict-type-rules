@@ -3,8 +3,14 @@
 import { execSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import path from "node:path";
 
-const HASH_FILE = ".prepush-hash";
+function getHashFilePath() {
+  const gitDir = execSync("git rev-parse --git-dir", {
+    encoding: "utf-8",
+  }).trim();
+  return path.join(gitDir, "prepush-hash");
+}
 
 function ensureGitRepo() {
   try {
@@ -22,7 +28,7 @@ function computeHash() {
   const files = output
     .split("\n")
     .filter(Boolean)
-    .filter((f) => !f.endsWith(".md") && f !== HASH_FILE)
+    .filter((f) => !f.endsWith(".md"))
     .sort();
 
   const hash = createHash("sha256");
@@ -39,25 +45,31 @@ function computeHash() {
 }
 
 function save() {
+  if (process.env.npm_lifecycle_event !== "prepush") {
+    console.error("prepush-hash: save must be called via 'pnpm prepush' or 'npm run prepush' or 'bun run prepush'");
+    process.exit(1);
+  }
   ensureGitRepo();
+  const hashFile = getHashFilePath();
   const hex = computeHash();
-  writeFileSync(HASH_FILE, hex + "\n");
+  writeFileSync(hashFile, hex + "\n");
   console.log(`prepush-hash: saved ${hex.slice(0, 16)}`);
 }
 
 function check() {
   ensureGitRepo();
-  if (!existsSync(HASH_FILE)) {
+  const hashFile = getHashFilePath();
+  if (!existsSync(hashFile)) {
     console.error(
-      "prepush-hash: .prepush-hash not found. Run prepush first.",
+      "prepush-hash: hash not found. Run 'pnpm prepush' or 'npm run prepush' or 'bun run prepush' first.",
     );
     process.exit(1);
   }
-  const saved = readFileSync(HASH_FILE, "utf-8").trim();
+  const saved = readFileSync(hashFile, "utf-8").trim();
   const current = computeHash();
   if (saved !== current) {
     console.error(
-      "prepush-hash: files changed since last prepush.",
+      "prepush-hash: files changed since last prepush. Run 'pnpm prepush' or 'npm run prepush' or 'bun run prepush' to update.",
     );
     console.error(`  saved:   ${saved.slice(0, 16)}`);
     console.error(`  current: ${current.slice(0, 16)}`);
@@ -85,9 +97,10 @@ function verifyFooter(msgFile, source) {
     msg = msg.replace(verifiedRegex, "");
   }
 
+  const hashFile = getHashFilePath();
   let footer;
-  if (existsSync(HASH_FILE)) {
-    const saved = readFileSync(HASH_FILE, "utf-8").trim();
+  if (existsSync(hashFile)) {
+    const saved = readFileSync(hashFile, "utf-8").trim();
     try {
       const current = computeHash();
       if (saved === current) {

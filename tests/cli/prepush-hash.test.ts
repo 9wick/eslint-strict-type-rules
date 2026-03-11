@@ -8,23 +8,25 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CLI = path.resolve(__dirname, "../../bin/prepush-hash.mjs");
 
+const baseEnv = { ...process.env, NODE_NO_WARNINGS: "1", npm_lifecycle_event: "prepush" };
+
 /** Run the CLI with the given command in the given cwd. */
-function run(command: string, cwd: string): string {
+function run(command: string, cwd: string, env: Record<string, string | undefined> = {}): string {
   return execSync(`node ${CLI} ${command}`, {
     cwd,
     encoding: "utf-8",
-    env: { ...process.env, NODE_NO_WARNINGS: "1" },
+    env: { ...baseEnv, ...env },
   });
 }
 
 /** Run the CLI expecting a non-zero exit. Returns stderr + stdout merged. */
-function runFail(command: string, cwd: string): string {
+function runFail(command: string, cwd: string, env: Record<string, string | undefined> = {}): string {
   try {
     execSync(`node ${CLI} ${command}`, {
       cwd,
       encoding: "utf-8",
       stdio: ["pipe", "pipe", "pipe"],
-      env: { ...process.env, NODE_NO_WARNINGS: "1" },
+      env: { ...baseEnv, ...env },
     });
     throw new Error("Expected command to fail but it succeeded");
   } catch (e: unknown) {
@@ -81,19 +83,6 @@ describe("prepush-hash CLI", () => {
       expect(hashBefore).toBe(hashAfter);
     });
 
-    it("excludes .prepush-hash from hash", () => {
-      writeFileSync(path.join(tmpDir, "a.ts"), "const a = 1;\n");
-      execSync("git add a.ts", { cwd: tmpDir, stdio: "ignore" });
-
-      const hashBefore = run("compute", tmpDir).trim();
-
-      writeFileSync(path.join(tmpDir, ".prepush-hash"), "somehash\n");
-      execSync("git add .prepush-hash", { cwd: tmpDir, stdio: "ignore" });
-
-      const hashAfter = run("compute", tmpDir).trim();
-      expect(hashBefore).toBe(hashAfter);
-    });
-
     it("changes hash when file content changes", () => {
       writeFileSync(path.join(tmpDir, "a.ts"), "const a = 1;\n");
       execSync("git add a.ts", { cwd: tmpDir, stdio: "ignore" });
@@ -136,13 +125,13 @@ describe("prepush-hash CLI", () => {
   // ─── save ────────────────────────────────────────────────────────────
 
   describe("save", () => {
-    it("creates .prepush-hash file", () => {
+    it("creates hash file in .git/", () => {
       writeFileSync(path.join(tmpDir, "a.ts"), "const a = 1;\n");
       execSync("git add a.ts", { cwd: tmpDir, stdio: "ignore" });
 
       run("save", tmpDir);
 
-      const hashFile = path.join(tmpDir, ".prepush-hash");
+      const hashFile = path.join(tmpDir, ".git", "prepush-hash");
       const content = readFileSync(hashFile, "utf-8");
       expect(content).toMatch(/^[0-9a-f]{64}\n$/);
     });
@@ -153,9 +142,17 @@ describe("prepush-hash CLI", () => {
 
       run("save", tmpDir);
 
-      const saved = readFileSync(path.join(tmpDir, ".prepush-hash"), "utf-8").trim();
+      const saved = readFileSync(path.join(tmpDir, ".git", "prepush-hash"), "utf-8").trim();
       const computed = run("compute", tmpDir).trim();
       expect(saved).toBe(computed);
+    });
+
+    it("rejects save when not called via package manager script", () => {
+      writeFileSync(path.join(tmpDir, "a.ts"), "const a = 1;\n");
+      execSync("git add a.ts", { cwd: tmpDir, stdio: "ignore" });
+
+      const output = runFail("save", tmpDir, { npm_lifecycle_event: undefined });
+      expect(output).toContain("save must be called via");
     });
   });
 
@@ -178,7 +175,7 @@ describe("prepush-hash CLI", () => {
       execSync("git add a.ts", { cwd: tmpDir, stdio: "ignore" });
 
       const output = runFail("check", tmpDir);
-      expect(output).toContain(".prepush-hash not found");
+      expect(output).toContain("hash not found");
     });
 
     it("fails (exit 1) when files changed since save", () => {
