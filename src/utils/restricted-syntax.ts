@@ -74,6 +74,12 @@ export const BASE_RESTRICTED_SYNTAX_RULES = {
    * テスタビリティとポータビリティを損なう。
    * 代わりに DI / 設定オブジェクト経由でアクセスすること。
    */
+  /** ユーザー定義の型述語を禁止。バリデーションライブラリを使用すること。 */
+  typePredicate: {
+    selector: "TSTypePredicate",
+    message:
+      "ユーザー定義の型述語（x is Type / asserts x is Type）は禁止です。TypeScript は実装の正しさを検証しません。バリデーションライブラリ（Valibot, Typebox 等）の型ガードを使用してください。",
+  },
   processAccess: {
     selector: 'MemberExpression[object.name="process"]',
     message:

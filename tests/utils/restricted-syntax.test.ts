@@ -6,8 +6,8 @@ import {
 } from "../../src/utils/restricted-syntax.js";
 
 describe("BASE_RESTRICTED_SYNTAX_RULES", () => {
-  it("should contain 10 rules", () => {
-    expect(Object.keys(BASE_RESTRICTED_SYNTAX_RULES)).toHaveLength(10);
+  it("should contain 11 rules", () => {
+    expect(Object.keys(BASE_RESTRICTED_SYNTAX_RULES)).toHaveLength(11);
   });
 
   it("should have selector and message for each rule", () => {
@@ -35,12 +35,12 @@ describe("BASE_RESTRICTED_SYNTAX_RULES", () => {
 describe("buildRestrictedSyntaxRules", () => {
   it("should return all rules when no exclusions", () => {
     const result = buildRestrictedSyntaxRules();
-    expect(result).toHaveLength(10);
+    expect(result).toHaveLength(11);
   });
 
   it("should exclude specified keys", () => {
     const result = buildRestrictedSyntaxRules(["throw", "tryCatch"]);
-    expect(result).toHaveLength(8);
+    expect(result).toHaveLength(9);
     expect(result.some((r) => r.selector === "ThrowStatement")).toBe(false);
     expect(result.some((r) => r.selector === "TryStatement")).toBe(false);
   });
@@ -65,7 +65,7 @@ describe("buildRestrictedSyntaxRules", () => {
       "promiseReject",
     ] as const;
     const result = buildRestrictedSyntaxRules([...testExclusions]);
-    // promiseResult + processAccess should remain
-    expect(result).toHaveLength(2);
+    // promiseResult + processAccess + typePredicate should remain
+    expect(result).toHaveLength(3);
   });
 });

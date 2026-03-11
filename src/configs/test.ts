@@ -20,6 +20,7 @@ export function testConfig(plugin: ESLint.Plugin): Linter.Config[] {
         "@9wick/strict-type-rules/no-promise-reject": "off",
         "@9wick/strict-type-rules/no-process-access": "off",
         "@9wick/strict-type-rules/no-unsafe-unwrap": "off",
+        "@9wick/strict-type-rules/no-type-predicate": "off",
 
         // === Relaxations: other ===
         "max-lines": [

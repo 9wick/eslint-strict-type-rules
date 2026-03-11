@@ -11,8 +11,8 @@ describe("plugin structure", () => {
     expect(plugin.meta!.version).toBe("0.1.0");
   });
 
-  it("should export 17 custom rules", () => {
-    expect(Object.keys(plugin.rules!)).toHaveLength(17);
+  it("should export 18 custom rules", () => {
+    expect(Object.keys(plugin.rules!)).toHaveLength(18);
     // Strict syntax rules (12)
     expect(plugin.rules).toHaveProperty("no-throw");
     expect(plugin.rules).toHaveProperty("no-try-catch");
