@@ -22,6 +22,7 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
         "@9wick/strict-type-rules/no-unsafe-unwrap": "error",
         "@9wick/strict-type-rules/no-switch-statement": "error",
         "@9wick/strict-type-rules/no-type-predicate": "error",
+        "@9wick/strict-type-rules/restrict-neverthrow-from-promise": "error",
 
         // === Other Custom Rules ===
         "@9wick/strict-type-rules/no-empty-select-value": "error",

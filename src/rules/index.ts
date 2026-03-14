@@ -8,6 +8,7 @@ import noNestedAndThen from "./no-nested-and-then.js";
 import noObjectHasOwn from "./no-object-has-own.js";
 import noProcessAccess from "./no-process-access.js";
 import noPromiseReject from "./no-promise-reject.js";
+import restrictNeverthrowFromPromise from "./restrict-neverthrow-from-promise.js";
 import noSwitchStatement from "./no-switch-statement.js";
 import noTypePredicate from "./no-type-predicate.js";
 import noPromiseResult from "./no-promise-result.js";
@@ -36,4 +37,5 @@ export const rules = {
   "no-unsafe-unwrap": noUnsafeUnwrap,
   "no-vitest-resolve-alias": noVitestResolveAlias,
   "require-injectable-class": requireInjectableClass,
+  "restrict-neverthrow-from-promise": restrictNeverthrowFromPromise,
 };
