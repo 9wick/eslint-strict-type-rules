@@ -11,8 +11,8 @@ describe("plugin structure", () => {
     expect(plugin.meta!.version).toBe("0.1.0");
   });
 
-  it("should export 19 custom rules", () => {
-    expect(Object.keys(plugin.rules!)).toHaveLength(19);
+  it("should export 18 custom rules", () => {
+    expect(Object.keys(plugin.rules!)).toHaveLength(18);
     // Strict syntax rules (12)
     expect(plugin.rules).toHaveProperty("no-throw");
     expect(plugin.rules).toHaveProperty("no-try-catch");
@@ -26,12 +26,12 @@ describe("plugin structure", () => {
     expect(plugin.rules).toHaveProperty("no-process-access");
     expect(plugin.rules).toHaveProperty("no-unsafe-unwrap");
     expect(plugin.rules).toHaveProperty("no-switch-statement");
-    // Other custom rules (5)
+    // Other custom rules (4)
     expect(plugin.rules).toHaveProperty("no-cross-directory-lib-import");
     expect(plugin.rules).toHaveProperty("no-empty-select-value");
     expect(plugin.rules).toHaveProperty("no-vitest-resolve-alias");
-    expect(plugin.rules).toHaveProperty("no-exported-callable");
-    expect(plugin.rules).toHaveProperty("require-injectable-class");
+    // DI rule (1 unified)
+    expect(plugin.rules).toHaveProperty("nestjs-like-di-for-needle-di");
   });
 
   it("should export 5 configs", () => {
@@ -80,12 +80,9 @@ describe("base config", () => {
     expect(rules["@9wick/strict-type-rules/no-vitest-resolve-alias"]).toBe(
       "error",
     );
-    // DI rules should NOT be in main entry
+    // DI rule should NOT be in main entry
     expect(
-      rules["@9wick/strict-type-rules/no-exported-callable"],
-    ).toBeUndefined();
-    expect(
-      rules["@9wick/strict-type-rules/require-injectable-class"],
+      rules["@9wick/strict-type-rules/nestjs-like-di-for-needle-di"],
     ).toBeUndefined();
   });
 
@@ -101,10 +98,7 @@ describe("base config", () => {
     expect(diConfig.name).toBe("@9wick/strict-type-rules/base/di");
     expect(diConfig.files).toEqual(["**/*.*.{ts,tsx}"]);
     expect(diConfig.ignores).toEqual(["**/*.lib.{ts,tsx}"]);
-    expect(diConfig.rules!["@9wick/strict-type-rules/no-exported-callable"]).toBe(
-      "error",
-    );
-    expect(diConfig.rules!["@9wick/strict-type-rules/require-injectable-class"]).toBe(
+    expect(diConfig.rules!["@9wick/strict-type-rules/nestjs-like-di-for-needle-di"]).toBe(
       "error",
     );
   });
@@ -195,10 +189,7 @@ describe("test config", () => {
 
   it("should disable DI rules for tests", () => {
     const rules = plugin.configs.test[0].rules!;
-    expect(rules["@9wick/strict-type-rules/no-exported-callable"]).toBe(
-      "off",
-    );
-    expect(rules["@9wick/strict-type-rules/require-injectable-class"]).toBe(
+    expect(rules["@9wick/strict-type-rules/nestjs-like-di-for-needle-di"]).toBe(
       "off",
     );
   });

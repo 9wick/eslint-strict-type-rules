@@ -229,7 +229,7 @@ describe("E2E: base config DI rules scoping", () => {
     const messages = results[0].messages;
     expect(
       messages.some((m) =>
-        m.ruleId === "@9wick/strict-type-rules/no-exported-callable",
+        m.ruleId === "@9wick/strict-type-rules/nestjs-like-di-for-needle-di",
       ),
     ).toBe(true);
   });
@@ -242,7 +242,7 @@ describe("E2E: base config DI rules scoping", () => {
     const messages = results[0].messages;
     expect(
       messages.some((m) =>
-        m.ruleId === "@9wick/strict-type-rules/no-exported-callable",
+        m.ruleId === "@9wick/strict-type-rules/nestjs-like-di-for-needle-di",
       ),
     ).toBe(false);
   });
@@ -255,7 +255,7 @@ describe("E2E: base config DI rules scoping", () => {
     const messages = results[0].messages;
     expect(
       messages.some((m) =>
-        m.ruleId === "@9wick/strict-type-rules/no-exported-callable",
+        m.ruleId === "@9wick/strict-type-rules/nestjs-like-di-for-needle-di",
       ),
     ).toBe(false);
   });

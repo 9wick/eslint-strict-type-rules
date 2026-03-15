@@ -1,34 +1,29 @@
 import noAngleAssertion from "./no-angle-assertion.js";
-import noClassField from "./no-class-field.js";
 import noAsAssertion from "./no-as-assertion.js";
 import noCrossDirectoryLibImport from "./no-cross-directory-lib-import.js";
 import noEmptySelectValue from "./no-empty-select-value.js";
-import noExportedCallable from "./no-exported-callable.js";
-import noModuleLevelVariable from "./no-module-level-variable.js";
 import noInOperator from "./no-in-operator.js";
 import noNestedAndThen from "./no-nested-and-then.js";
 import noObjectHasOwn from "./no-object-has-own.js";
 import noProcessAccess from "./no-process-access.js";
 import noPromiseReject from "./no-promise-reject.js";
-import restrictNeverthrowFromPromise from "./restrict-neverthrow-from-promise.js";
-import noSwitchStatement from "./no-switch-statement.js";
-import noTypePredicate from "./no-type-predicate.js";
 import noPromiseResult from "./no-promise-result.js";
+import noSwitchStatement from "./no-switch-statement.js";
 import noThrow from "./no-throw.js";
 import noTryCatch from "./no-try-catch.js";
+import noTypePredicate from "./no-type-predicate.js";
 import noUnsafeUnwrap from "./no-unsafe-unwrap.js";
 import noVitestResolveAlias from "./no-vitest-resolve-alias.js";
-import requireInjectableClass from "./require-injectable-class.js";
+import nestjsLikeDiForNeedleDi from "./nestjs-like-di-for-needle-di.js";
+import restrictNeverthrowFromPromise from "./restrict-neverthrow-from-promise.js";
 
 export const rules = {
+  "nestjs-like-di-for-needle-di": nestjsLikeDiForNeedleDi,
   "no-angle-assertion": noAngleAssertion,
   "no-as-assertion": noAsAssertion,
-  "no-class-field": noClassField,
   "no-cross-directory-lib-import": noCrossDirectoryLibImport,
   "no-empty-select-value": noEmptySelectValue,
-  "no-exported-callable": noExportedCallable,
   "no-in-operator": noInOperator,
-  "no-module-level-variable": noModuleLevelVariable,
   "no-nested-and-then": noNestedAndThen,
   "no-object-has-own": noObjectHasOwn,
   "no-process-access": noProcessAccess,
@@ -40,6 +35,5 @@ export const rules = {
   "no-try-catch": noTryCatch,
   "no-unsafe-unwrap": noUnsafeUnwrap,
   "no-vitest-resolve-alias": noVitestResolveAlias,
-  "require-injectable-class": requireInjectableClass,
   "restrict-neverthrow-from-promise": restrictNeverthrowFromPromise,
 };

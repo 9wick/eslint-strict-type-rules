@@ -17,6 +17,27 @@ function isCallableDeclaration(node: Rule.Node | null | undefined): boolean {
   return false;
 }
 
+function isInjectableDecorator(decorator: any): boolean {
+  const expression = decorator.expression;
+  if (expression?.type === "Identifier") {
+    return expression.name === "injectable";
+  }
+  if (
+    expression?.type === "CallExpression" &&
+    expression.callee.type === "Identifier"
+  ) {
+    return expression.callee.name === "injectable";
+  }
+  return false;
+}
+
+function isInjectableClass(node: Rule.Node | null | undefined): boolean {
+  return (
+    node?.type === "ClassDeclaration" &&
+    (node as any).decorators?.some(isInjectableDecorator)
+  );
+}
+
 function collectTopLevelBindings(body: Rule.Node[]): Map<string, Rule.Node> {
   const bindings = new Map<string, Rule.Node>();
 
@@ -75,45 +96,75 @@ const rule: Rule.RuleModule = {
     type: "problem",
     docs: {
       description:
-        "Disallow exported functions in DI-oriented modules. Export behavior through injectable classes instead.",
+        "Enforce NestJS-like DI patterns for needle-di modules: require @injectable() class exports, ban exported functions, module-level variables, and class fields.",
     },
     schema: [],
     messages: {
+      missingInjectable:
+        "DI modules must export at least one @injectable() class.",
       noCallable:
-        "Do not export functions from DI-oriented modules. Export behavior through an @injectable() class instead.",
+        "Do not export functions from DI modules. Export behavior through an @injectable() class instead.",
+      noModuleLevelVariable:
+        "Do not declare variables at module level in DI modules. Use constructor injection instead.",
+      noClassField:
+        "Do not declare class fields in DI modules. Classes should be stateless. Use constructor parameter properties for injection.",
     },
   },
   create(context) {
     return {
+      // Check 1: No module-level variables
+      VariableDeclaration(node) {
+        const parent = (node as any).parent;
+        if (parent?.type !== "Program") return;
+
+        context.report({ node, messageId: "noModuleLevelVariable" });
+      },
+
+      // Check 2: No class fields
+      PropertyDefinition(node) {
+        context.report({ node, messageId: "noClassField" });
+      },
+
+      // Check 3 & 4: Require injectable export + no callable exports
       Program(node) {
         const programNode = node as any;
         const bindings = collectTopLevelBindings(programNode.body);
+        let hasInjectableExport = false;
 
         for (const statement of programNode.body) {
           if (statement.type === "ExportNamedDeclaration") {
-            if (statement.exportKind === "type") {
-              continue;
-            }
+            if (statement.exportKind === "type") continue;
 
             const exportedNode = resolveExportedNode(
               statement.declaration,
               bindings,
             );
+
+            if (isInjectableClass(exportedNode)) {
+              hasInjectableExport = true;
+            }
+
             if (isCallableDeclaration(exportedNode)) {
               context.report({ node: statement, messageId: "noCallable" });
             }
 
             for (const specifier of statement.specifiers) {
-              if (specifier.exportKind === "type") {
-                continue;
-              }
+              if (specifier.exportKind === "type") continue;
 
               const localNode = resolveExportedNode(
                 specifier.local,
                 bindings,
               );
+
+              if (isInjectableClass(localNode)) {
+                hasInjectableExport = true;
+              }
+
               if (isCallableDeclaration(localNode)) {
-                context.report({ node: specifier, messageId: "noCallable" });
+                context.report({
+                  node: specifier,
+                  messageId: "noCallable",
+                });
               }
             }
           }
@@ -123,10 +174,19 @@ const rule: Rule.RuleModule = {
               statement.declaration,
               bindings,
             );
+
+            if (isInjectableClass(exportedNode)) {
+              hasInjectableExport = true;
+            }
+
             if (isCallableDeclaration(exportedNode)) {
               context.report({ node: statement, messageId: "noCallable" });
             }
           }
+        }
+
+        if (!hasInjectableExport) {
+          context.report({ node, messageId: "missingInjectable" });
         }
       },
     };

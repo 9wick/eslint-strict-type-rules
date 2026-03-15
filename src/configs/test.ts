@@ -30,8 +30,7 @@ export function testConfig(plugin: ESLint.Plugin): Linter.Config[] {
         "max-lines-per-function": "off",
         "no-console": "off",
         "@eslint-community/eslint-comments/no-use": "off",
-        "@9wick/strict-type-rules/no-exported-callable": "off",
-        "@9wick/strict-type-rules/require-injectable-class": "off",
+        "@9wick/strict-type-rules/nestjs-like-di-for-needle-di": "off",
       },
     },
     {
