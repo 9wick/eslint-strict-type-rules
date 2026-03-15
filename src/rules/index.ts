@@ -3,6 +3,7 @@ import noAsAssertion from "./no-as-assertion.js";
 import noCrossDirectoryLibImport from "./no-cross-directory-lib-import.js";
 import noEmptySelectValue from "./no-empty-select-value.js";
 import noExportedCallable from "./no-exported-callable.js";
+import noModuleLevelVariable from "./no-module-level-variable.js";
 import noInOperator from "./no-in-operator.js";
 import noNestedAndThen from "./no-nested-and-then.js";
 import noObjectHasOwn from "./no-object-has-own.js";
@@ -25,6 +26,7 @@ export const rules = {
   "no-empty-select-value": noEmptySelectValue,
   "no-exported-callable": noExportedCallable,
   "no-in-operator": noInOperator,
+  "no-module-level-variable": noModuleLevelVariable,
   "no-nested-and-then": noNestedAndThen,
   "no-object-has-own": noObjectHasOwn,
   "no-process-access": noProcessAccess,

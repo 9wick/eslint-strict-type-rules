@@ -102,6 +102,7 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
       },
       rules: {
         "@9wick/strict-type-rules/no-exported-callable": "error",
+        "@9wick/strict-type-rules/no-module-level-variable": "error",
         "@9wick/strict-type-rules/require-injectable-class": "error",
       },
     },
