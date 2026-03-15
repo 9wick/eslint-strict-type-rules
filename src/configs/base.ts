@@ -43,6 +43,7 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
         ],
 
         // === TypeScript ===
+        "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/no-non-null-assertion": "error",
         "@typescript-eslint/no-unused-vars": [
           "error",
@@ -83,6 +84,13 @@ export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
       files: ["**/*.{ts,tsx}"],
       rules: {
         "@typescript-eslint/no-unnecessary-condition": "error",
+        "@typescript-eslint/no-unsafe-assignment": "error",
+        "@typescript-eslint/no-unsafe-call": "error",
+        "@typescript-eslint/no-unsafe-member-access": "error",
+        "@typescript-eslint/no-unsafe-return": "error",
+        "@typescript-eslint/no-unsafe-argument": "error",
+        "@typescript-eslint/no-floating-promises": "error",
+        "@typescript-eslint/no-misused-promises": "error",
       },
     },
     {
