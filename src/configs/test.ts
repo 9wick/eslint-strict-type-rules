@@ -1,6 +1,7 @@
-import type { ESLint, Linter } from "eslint";
+import type { ESLint } from "eslint";
+import type { TSESLint } from "@typescript-eslint/utils";
 
-export function testConfig(plugin: ESLint.Plugin): Linter.Config[] {
+export function testConfig(plugin: ESLint.Plugin): TSESLint.FlatConfig.Config[] {
   return [
     {
       name: "@9wick/strict-type-rules/test",
@@ -21,6 +22,9 @@ export function testConfig(plugin: ESLint.Plugin): Linter.Config[] {
         "@9wick/strict-type-rules/no-process-access": "off",
         "@9wick/strict-type-rules/no-unsafe-unwrap": "off",
         "@9wick/strict-type-rules/no-type-predicate": "off",
+
+        // === Relaxations: TypeScript ===
+        "@typescript-eslint/no-non-null-assertion": "off",
 
         // === Relaxations: other ===
         "max-lines": [

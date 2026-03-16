@@ -1,6 +1,7 @@
-import type { ESLint, Linter } from "eslint";
+import type { ESLint } from "eslint";
+import type { TSESLint } from "@typescript-eslint/utils";
 
-export function baseConfig(plugin: ESLint.Plugin): Linter.Config[] {
+export function baseConfig(plugin: ESLint.Plugin): TSESLint.FlatConfig.Config[] {
   return [
     {
       name: "@9wick/strict-type-rules/base",

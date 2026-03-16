@@ -14,7 +14,7 @@ const rule: Rule.RuleModule = {
     schema: [],
   },
   create(context) {
-    function check(node: Rule.Node & { source?: { value: unknown } | null }) {
+    function check(node: Rule.Node & { source?: { value?: unknown } | null }) {
       const source = node.source?.value;
       if (typeof source !== "string") return;
 

@@ -1,6 +1,6 @@
-import type { Linter } from "eslint";
+import type { TSESLint } from "@typescript-eslint/utils";
 
-export function barrelConfig(): Linter.Config[] {
+export function barrelConfig(): TSESLint.FlatConfig.Config[] {
   return [
     {
       name: "@9wick/strict-type-rules/barrel",

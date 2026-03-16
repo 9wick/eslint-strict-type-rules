@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { ESLint, Linter } from "eslint";
+import type { TSESLint } from "@typescript-eslint/utils";
 import tseslint from "typescript-eslint";
 import sonarjs from "eslint-plugin-sonarjs";
 import * as importX from "eslint-plugin-import-x";
@@ -11,7 +12,7 @@ import plugin from "../../src/index.js";
  * E2Eテスト用: peer dependency pluginを登録した上でpluginのconfigを適用する。
  * 実際のconsumer環境を模倣する。
  */
-function createESLint(configs: Linter.Config[]) {
+function createESLint(configs: TSESLint.FlatConfig.Config[]) {
   return new ESLint({
     overrideConfigFile: true,
     overrideConfig: [
@@ -39,16 +40,16 @@ function createESLint(configs: Linter.Config[]) {
         ? eslintComments.recommended
         : [eslintComments.recommended]) as Linter.Config[],
       // テスト対象のconfig
-      ...configs,
+      ...configs as Linter.Config[],
     ],
   });
 }
 
 /** peer dependency不要のconfigのみテストする場合 */
-function createSimpleESLint(configs: Linter.Config[]) {
+function createSimpleESLint(configs: TSESLint.FlatConfig.Config[]) {
   return new ESLint({
     overrideConfigFile: true,
-    overrideConfig: configs,
+    overrideConfig: configs as Linter.Config[],
   });
 }
 

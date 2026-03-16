@@ -7,7 +7,7 @@ const plugin: ESLint.Plugin = {
     name: "@9wick/eslint-plugin-strict-type-rules",
     version: "0.1.0",
   },
-  rules,
+  rules: rules as unknown as ESLint.Plugin["rules"],
 };
 
 export default plugin;

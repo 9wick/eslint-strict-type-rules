@@ -1,6 +1,6 @@
-import type { Linter } from "eslint";
+import type { TSESLint } from "@typescript-eslint/utils";
 
-export function reactConfig(): Linter.Config[] {
+export function reactConfig(): TSESLint.FlatConfig.Config[] {
   return [
     {
       name: "@9wick/strict-type-rules/react",
