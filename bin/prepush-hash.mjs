@@ -44,8 +44,16 @@ function computeHash() {
   return hash.digest("hex");
 }
 
+function isRunViaPackageManager() {
+  // npm/pnpm/yarn set npm_lifecycle_event; bun >=1.3 does too
+  if (process.env.npm_lifecycle_event) return true;
+  // bun 1.2.x omits npm_lifecycle_event but sets npm_execpath
+  if (process.env.npm_execpath) return true;
+  return false;
+}
+
 function save() {
-  if (!process.env.npm_lifecycle_event) {
+  if (!isRunViaPackageManager()) {
     console.error(
       "prepush-hash: save must be called via a package manager script (e.g., 'pnpm prepush')",
     );

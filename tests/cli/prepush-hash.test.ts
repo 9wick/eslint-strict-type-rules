@@ -151,7 +151,7 @@ describe("prepush-hash CLI", () => {
       writeFileSync(path.join(tmpDir, "a.ts"), "const a = 1;\n");
       execSync("git add a.ts", { cwd: tmpDir, stdio: "ignore" });
 
-      const output = runFail("save", tmpDir, { npm_lifecycle_event: "" });
+      const output = runFail("save", tmpDir, { npm_lifecycle_event: "", npm_execpath: "" });
       expect(output).toContain("save must be called via");
     });
   });
