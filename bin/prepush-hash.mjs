@@ -45,8 +45,10 @@ function computeHash() {
 }
 
 function save() {
-  if (process.env.npm_lifecycle_event !== "prepush") {
-    console.error("prepush-hash: save must be called via 'pnpm prepush' or 'npm run prepush' or 'bun run prepush'");
+  if (!process.env.npm_lifecycle_event) {
+    console.error(
+      "prepush-hash: save must be called via a package manager script (e.g., 'pnpm prepush')",
+    );
     process.exit(1);
   }
   ensureGitRepo();
