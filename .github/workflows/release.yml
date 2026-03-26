@@ -1,0 +1,69 @@
+name: Release to release branch
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup git config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Setup release branch
+        run: |
+          git fetch origin release || true
+          if git rev-parse --verify origin/release >/dev/null 2>&1; then
+            git switch release
+          else
+            git switch -c release
+          fi
+
+      - name: Sync tree from main
+        run: git restore --source=origin/main --staged --worktree .
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Remove dist from .gitignore
+        run: sed -i '/^dist\/$/d' .gitignore
+
+      - name: Commit and push
+        run: |
+          git add .
+          git reset .gitignore
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "build: update dist from main@$(git rev-parse --short origin/main)"
+            git push origin release
+          fi
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
