@@ -24,6 +24,7 @@ export function baseConfig(plugin: ESLint.Plugin): TSESLint.FlatConfig.Config[] 
         "@9wick/strict-type-rules/no-unsafe-unwrap": "error",
         "@9wick/strict-type-rules/no-switch-statement": "error",
         "@9wick/strict-type-rules/no-type-predicate": "error",
+        "@9wick/strict-type-rules/no-redundant-readonly-literal": "error",
         "@9wick/strict-type-rules/restrict-neverthrow-from-promise": "error",
 
         // === Other Custom Rules ===
