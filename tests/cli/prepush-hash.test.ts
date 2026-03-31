@@ -247,6 +247,30 @@ describe("prepush-hash CLI", () => {
       expect(result).not.toContain("\u2713");
     });
 
+    it("appends triangle when hash matches but unstaged changes exist", () => {
+      // Simulate: stage bad code, then fix in working tree without staging
+      writeFileSync(path.join(tmpDir, "a.ts"), "const a = BAD;\n");
+      execSync("git add a.ts", { cwd: tmpDir, stdio: "ignore" });
+
+      // Fix in working tree (not staged) — prepush would check this good version
+      writeFileSync(path.join(tmpDir, "a.ts"), "const a = 1;\n");
+
+      // Save hash (based on working tree = good code)
+      run("save", tmpDir);
+
+      // verify-footer: hash matches, but git diff shows unstaged changes
+      const msgFile = path.join(tmpDir, ".git", "COMMIT_EDITMSG");
+      writeFileSync(msgFile, "feat: add feature\n");
+
+      run(`verify-footer ${msgFile}`, tmpDir);
+
+      const result = readFileSync(msgFile, "utf-8");
+      expect(result).toContain("Verified: prepush △");
+      expect(result).toMatch(/Verified: prepush △ \([0-9a-f]{16}\)/);
+      expect(result).not.toContain("✓");
+      expect(result).not.toContain("✕");
+    });
+
     it("replaces existing Verified line on amend (no duplicate)", () => {
       writeFileSync(path.join(tmpDir, "a.ts"), "const a = 1;\n");
       execSync("git add a.ts", { cwd: tmpDir, stdio: "ignore" });

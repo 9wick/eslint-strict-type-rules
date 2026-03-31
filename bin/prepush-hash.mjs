@@ -44,6 +44,11 @@ function computeHash() {
   return hash.digest("hex");
 }
 
+function hasUnstagedChanges() {
+  const diff = execSync("git diff --name-only", { encoding: "utf-8" }).trim();
+  return diff.length > 0;
+}
+
 function isRunViaPackageManager() {
   // npm/pnpm/yarn set npm_lifecycle_event; bun >=1.3 does too
   if (process.env.npm_lifecycle_event) return true;
@@ -114,7 +119,11 @@ function verifyFooter(msgFile, source) {
     try {
       const current = computeHash();
       if (saved === current) {
-        footer = `Verified: prepush ✓ (${saved.slice(0, 16)})`;
+        if (hasUnstagedChanges()) {
+          footer = `Verified: prepush △ (${saved.slice(0, 16)})`;
+        } else {
+          footer = `Verified: prepush ✓ (${saved.slice(0, 16)})`;
+        }
       } else {
         footer = "Verified: prepush ✕";
       }
