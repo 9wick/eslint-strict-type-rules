@@ -11,15 +11,16 @@ describe("plugin structure", () => {
     expect(plugin.meta!.version).toBe("0.1.0");
   });
 
-  it("should export 18 custom rules", () => {
-    expect(Object.keys(plugin.rules!)).toHaveLength(18);
-    // Strict syntax rules (12)
+  it("should export 19 custom rules", () => {
+    expect(Object.keys(plugin.rules!)).toHaveLength(19);
+    // Strict syntax rules (13)
     expect(plugin.rules).toHaveProperty("no-throw");
     expect(plugin.rules).toHaveProperty("no-try-catch");
     expect(plugin.rules).toHaveProperty("no-promise-result");
     expect(plugin.rules).toHaveProperty("no-nested-and-then");
     expect(plugin.rules).toHaveProperty("no-as-assertion");
     expect(plugin.rules).toHaveProperty("no-angle-assertion");
+    expect(plugin.rules).toHaveProperty("no-import-rename");
     expect(plugin.rules).toHaveProperty("no-in-operator");
     expect(plugin.rules).toHaveProperty("no-object-has-own");
     expect(plugin.rules).toHaveProperty("no-promise-reject");
@@ -200,6 +201,7 @@ describe("test config", () => {
     expect(rules["@9wick/strict-type-rules/no-try-catch"]).toBe("off");
     expect(rules["@9wick/strict-type-rules/no-as-assertion"]).toBe("off");
     expect(rules["@9wick/strict-type-rules/no-angle-assertion"]).toBe("off");
+    expect(rules["@9wick/strict-type-rules/no-import-rename"]).toBe("off");
     expect(rules["@9wick/strict-type-rules/no-in-operator"]).toBe("off");
     expect(rules["@9wick/strict-type-rules/no-object-has-own"]).toBe("off");
     expect(rules["@9wick/strict-type-rules/no-nested-and-then"]).toBe("off");

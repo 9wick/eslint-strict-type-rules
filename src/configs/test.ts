@@ -15,6 +15,7 @@ export function testConfig(plugin: ESLint.Plugin): TSESLint.FlatConfig.Config[] 
         "@9wick/strict-type-rules/no-try-catch": "off",
         "@9wick/strict-type-rules/no-as-assertion": "off",
         "@9wick/strict-type-rules/no-angle-assertion": "off",
+        "@9wick/strict-type-rules/no-import-rename": "off",
         "@9wick/strict-type-rules/no-in-operator": "off",
         "@9wick/strict-type-rules/no-object-has-own": "off",
         "@9wick/strict-type-rules/no-nested-and-then": "off",

@@ -2,6 +2,7 @@ import noAngleAssertion from "./no-angle-assertion.js";
 import noAsAssertion from "./no-as-assertion.js";
 import noCrossDirectoryLibImport from "./no-cross-directory-lib-import.js";
 import noEmptySelectValue from "./no-empty-select-value.js";
+import noImportRename from "./no-import-rename.js";
 import noInOperator from "./no-in-operator.js";
 import noNestedAndThen from "./no-nested-and-then.js";
 import noObjectHasOwn from "./no-object-has-own.js";
@@ -23,6 +24,7 @@ export const rules = {
   "no-as-assertion": noAsAssertion,
   "no-cross-directory-lib-import": noCrossDirectoryLibImport,
   "no-empty-select-value": noEmptySelectValue,
+  "no-import-rename": noImportRename,
   "no-in-operator": noInOperator,
   "no-nested-and-then": noNestedAndThen,
   "no-object-has-own": noObjectHasOwn,

@@ -16,6 +16,7 @@ export function baseConfig(plugin: ESLint.Plugin): TSESLint.FlatConfig.Config[] 
         "@9wick/strict-type-rules/no-nested-and-then": "error",
         "@9wick/strict-type-rules/no-as-assertion": "error",
         "@9wick/strict-type-rules/no-angle-assertion": "error",
+        "@9wick/strict-type-rules/no-import-rename": "error",
         "@9wick/strict-type-rules/no-in-operator": "error",
         "@9wick/strict-type-rules/no-object-has-own": "error",
         "@9wick/strict-type-rules/no-promise-reject": "error",
