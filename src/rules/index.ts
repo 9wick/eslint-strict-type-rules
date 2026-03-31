@@ -7,6 +7,7 @@ import noInOperator from "./no-in-operator.js";
 import noNestedAndThen from "./no-nested-and-then.js";
 import noObjectHasOwn from "./no-object-has-own.js";
 import noProcessAccess from "./no-process-access.js";
+import noRedundantReadonlyLiteral from "./no-redundant-readonly-literal.js";
 import noPromiseReject from "./no-promise-reject.js";
 import noPromiseResult from "./no-promise-result.js";
 import noSwitchStatement from "./no-switch-statement.js";
@@ -29,6 +30,7 @@ export const rules = {
   "no-nested-and-then": noNestedAndThen,
   "no-object-has-own": noObjectHasOwn,
   "no-process-access": noProcessAccess,
+  "no-redundant-readonly-literal": noRedundantReadonlyLiteral,
   "no-promise-reject": noPromiseReject,
   "no-promise-result": noPromiseResult,
   "no-switch-statement": noSwitchStatement,
