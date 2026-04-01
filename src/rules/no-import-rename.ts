@@ -2,12 +2,18 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 type MessageIds = "noImportRename";
 
+function getImportedName(node: TSESTree.ImportSpecifier): string {
+  return node.imported.type === "Identifier"
+    ? node.imported.name
+    : node.imported.value;
+}
+
 const rule: TSESLint.RuleModule<MessageIds> = {
   meta: {
     type: "problem",
     docs: {
       description:
-        "Disallow renaming imports with `import { foo as bar }`. Renamed imports can mislead readers about what a binding actually refers to.",
+        "Disallow renaming imports with `import { foo as bar }`. Renamed imports can mislead readers about what a binding actually refers to. Allows renaming when the original name conflicts with another import in the same file.",
     },
     messages: {
       noImportRename:
@@ -19,14 +25,36 @@ const rule: TSESLint.RuleModule<MessageIds> = {
   defaultOptions: [],
 
   create(context) {
-    return {
-      ImportSpecifier(node: TSESTree.ImportSpecifier) {
-        const imported =
-          node.imported.type === "Identifier"
-            ? node.imported.name
-            : node.imported.value;
+    const allLocalNames = new Set<string>();
+    const importedNameCounts = new Map<string, number>();
+    const renamedSpecifiers: Array<{
+      node: TSESTree.ImportSpecifier;
+      imported: string;
+    }> = [];
 
-        if (imported !== node.local.name) {
+    return {
+      ImportDeclaration(decl: TSESTree.ImportDeclaration) {
+        for (const specifier of decl.specifiers) {
+          allLocalNames.add(specifier.local.name);
+        }
+        for (const specifier of decl.specifiers) {
+          if (specifier.type !== "ImportSpecifier") continue;
+          const imported = getImportedName(specifier);
+          importedNameCounts.set(
+            imported,
+            (importedNameCounts.get(imported) ?? 0) + 1,
+          );
+          if (imported !== specifier.local.name) {
+            renamedSpecifiers.push({ node: specifier, imported });
+          }
+        }
+      },
+
+      "Program:exit"() {
+        for (const { node, imported } of renamedSpecifiers) {
+          const hasLocalConflict = allLocalNames.has(imported);
+          const hasDuplicateImport = (importedNameCounts.get(imported) ?? 0) > 1;
+          if (hasLocalConflict || hasDuplicateImport) continue;
           context.report({
             node,
             messageId: "noImportRename",
