@@ -15,6 +15,26 @@ describe("no-import-rename", () => {
         { code: `import * as ns from 'module';` },
         { code: `import 'side-effect';` },
         { code: `import { type Foo } from 'bar';` },
+        // name conflict with named import
+        {
+          code: `import { Foo } from './a';\nimport { Foo as FooB } from './b';`,
+        },
+        // name conflict with default import
+        {
+          code: `import React from 'react';\nimport { React as ReactLib } from './lib';`,
+        },
+        // name conflict with namespace import
+        {
+          code: `import * as path from 'path';\nimport { path as pathUtil } from './utils';`,
+        },
+        // name conflict with type import
+        {
+          code: `import { type User } from './auth';\nimport { type User as UserModel } from './db';`,
+        },
+        // both renamed - same imported name from different modules
+        {
+          code: `import { Foo as FooA } from './a';\nimport { Foo as FooB } from './b';`,
+        },
       ],
       invalid: [
         {
