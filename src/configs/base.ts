@@ -1,0 +1,118 @@
+import type { ESLint } from "eslint";
+import type { TSESLint } from "@typescript-eslint/utils";
+
+export function baseConfig(plugin: ESLint.Plugin): TSESLint.FlatConfig.Config[] {
+  return [
+    {
+      name: "@9wick/strict-type-rules/base",
+      plugins: {
+        "@9wick/strict-type-rules": plugin,
+      },
+      rules: {
+        // === Strict Syntax Rules (individual, independently toggleable) ===
+        "@9wick/strict-type-rules/no-throw": "error",
+        "@9wick/strict-type-rules/no-try-catch": "error",
+        "@9wick/strict-type-rules/no-promise-result": "error",
+        "@9wick/strict-type-rules/no-nested-and-then": "error",
+        "@9wick/strict-type-rules/no-as-assertion": "error",
+        "@9wick/strict-type-rules/no-angle-assertion": "error",
+        "@9wick/strict-type-rules/no-import-rename": "error",
+        "@9wick/strict-type-rules/no-in-operator": "error",
+        "@9wick/strict-type-rules/no-object-has-own": "error",
+        "@9wick/strict-type-rules/no-promise-reject": "error",
+        "@9wick/strict-type-rules/no-process-access": "error",
+        "@9wick/strict-type-rules/no-unsafe-unwrap": "error",
+        "@9wick/strict-type-rules/no-switch-statement": "error",
+        "@9wick/strict-type-rules/no-type-predicate": "error",
+        "@9wick/strict-type-rules/no-redundant-readonly-literal": "error",
+        "@9wick/strict-type-rules/restrict-neverthrow-from-promise": "error",
+
+        // === Other Custom Rules ===
+        "@9wick/strict-type-rules/no-empty-select-value": "error",
+        "@9wick/strict-type-rules/no-vitest-resolve-alias": "error",
+        "@9wick/strict-type-rules/no-cross-directory-lib-import": "error",
+
+        // === Complexity ===
+        complexity: ["error", { max: 7 }],
+        "sonarjs/cognitive-complexity": "error",
+        "no-console": "error",
+        "max-lines": [
+          "error",
+          { max: 500, skipBlankLines: true, skipComments: true },
+        ],
+        "max-lines-per-function": [
+          "error",
+          { max: 50, skipBlankLines: true, skipComments: true, IIFEs: true },
+        ],
+
+        // === TypeScript ===
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-non-null-assertion": "error",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+        ],
+        "@typescript-eslint/explicit-function-return-type": "off",
+
+        // === Import ===
+        "import-x/no-cycle": "error",
+        "import-x/order": [
+          "error",
+          {
+            groups: [
+              "builtin",
+              "external",
+              "internal",
+              "parent",
+              "sibling",
+              "index",
+            ],
+            "newlines-between": "always",
+          },
+        ],
+        "import-x/no-namespace": [
+          "error",
+          { ignore: ["react", "@radix-ui/*", "valibot"] },
+        ],
+
+        // === ESLint Comments ===
+        "@eslint-community/eslint-comments/no-use": [
+          "error",
+          { allow: [] as string[] },
+        ],
+      },
+    },
+    {
+      name: "@9wick/strict-type-rules/base/type-checked",
+      files: ["**/*.{ts,tsx}"],
+      rules: {
+        "@typescript-eslint/no-unnecessary-condition": "error",
+        "@typescript-eslint/no-unsafe-assignment": "error",
+        "@typescript-eslint/no-unsafe-call": "error",
+        "@typescript-eslint/no-unsafe-member-access": "error",
+        "@typescript-eslint/no-unsafe-return": "error",
+        "@typescript-eslint/no-unsafe-argument": "error",
+        "@typescript-eslint/no-floating-promises": "error",
+        "@typescript-eslint/no-misused-promises": "error",
+      },
+    },
+    {
+      name: "@9wick/strict-type-rules/base/di",
+      files: ["**/*.*.{ts,tsx}"],
+      ignores: ["**/*.lib.{ts,tsx}"],
+      plugins: {
+        "@9wick/strict-type-rules": plugin,
+      },
+      rules: {
+        "@9wick/strict-type-rules/nestjs-like-di-for-needle-di": "error",
+      },
+    },
+    {
+      name: "@9wick/strict-type-rules/base/logger",
+      files: ["**/*[lL]ogger*.{ts,tsx,js,jsx}"],
+      rules: {
+        "no-console": "off",
+      },
+    },
+  ];
+}
