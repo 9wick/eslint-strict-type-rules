@@ -12,16 +12,11 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "bin": {
-    "prepush-hash": "./bin/prepush-hash.mjs"
-  },
   "files": [
     "dist",
-    "tsconfig",
-    "bin"
+    "tsconfig"
   ],
   "scripts": {
-    "prepush": "pnpm build && pnpm typecheck && pnpm test && prepush-hash save",
     "build": "tsup",
     "test": "vitest run",
     "test:watch": "vitest",
