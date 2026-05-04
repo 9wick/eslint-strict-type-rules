@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/9wick/eslint-plugin-strict-type-rules/compare/v1.0.1...v1.0.2) (2026-05-04)
+
+
+### Bug Fixes
+
+* add repository field and upgrade npm for OIDC publish ([ca78eeb](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/ca78eeb592ede716e790b0a072f72874b5f1dd04))
+* add repository field and upgrade npm for OIDC publish ([e5ef519](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/e5ef51922281c46fb58a55c67e30a84ac5e723c4))
+
 ## [1.0.1](https://github.com/9wick/eslint-plugin-strict-type-rules/compare/v1.0.0...v1.0.1) (2026-05-04)
 
 
