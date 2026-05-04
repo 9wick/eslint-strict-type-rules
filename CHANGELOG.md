@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/9wick/eslint-plugin-strict-type-rules/compare/v1.0.0...v1.0.1) (2026-05-04)
+
+
+### Bug Fixes
+
+* move permissions to job level for npm OIDC publish ([a54205d](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/a54205d1b229b325af67f116f88678badb9733af))
+* move permissions to job level for OIDC to work ([f817da6](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/f817da6e3faf81e1c324431e3eb1282a28827ea7))
+
 ## 1.0.0 (2026-05-04)
 
 
