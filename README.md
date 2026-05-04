@@ -5,7 +5,7 @@ neverthrow / 型安全性 / コード品質のための厳格な ESLint ルー�
 ## Install
 
 ```bash
-pnpm add -D "github:9wick/eslint-strict-type-rules#main"
+pnpm add -D @9wick/eslint-plugin-strict-type-rules
 ```
 
 ### Peer Dependencies
