@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.0 (2026-05-04)
+
+
+### Features
+
+* eslint-plugin-strict-type-rules initial implementation ([c54a9ef](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/c54a9efa4116acc82b7e2b802874fffbad68332f))
+
+
+### Bug Fixes
+
+* add repository field and upgrade npm for OIDC publish ([a37fc30](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/a37fc30d5e12c970776e83f4b1a5b4bad91533be))
+* move permissions to job level for OIDC to work ([1e592f9](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/1e592f90092cabe8da48a0e437f3321e3c1aca26))
+
 ## [1.0.2](https://github.com/9wick/eslint-plugin-strict-type-rules/compare/v1.0.1...v1.0.2) (2026-05-04)
 
 
