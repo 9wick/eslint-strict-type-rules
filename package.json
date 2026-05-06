@@ -1,6 +1,6 @@
 {
   "name": "@9wick/eslint-plugin-strict-type-rules",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "ESLint plugin with the strictest TypeScript rules for neverthrow, type safety, and code quality",
   "type": "module",
   "exports": {
