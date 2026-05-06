@@ -17,24 +17,32 @@ function isCallableDeclaration(node: Rule.Node | null | undefined): boolean {
   return false;
 }
 
-function isInjectableDecorator(decorator: any): boolean {
+function isInjectableDecorator(
+  decorator: any,
+  decoratorNames: string[],
+): boolean {
   const expression = decorator.expression;
   if (expression?.type === "Identifier") {
-    return expression.name === "injectable";
+    return decoratorNames.includes(expression.name);
   }
   if (
     expression?.type === "CallExpression" &&
     expression.callee.type === "Identifier"
   ) {
-    return expression.callee.name === "injectable";
+    return decoratorNames.includes(expression.callee.name);
   }
   return false;
 }
 
-function isInjectableClass(node: Rule.Node | null | undefined): boolean {
+function isInjectableClass(
+  node: Rule.Node | null | undefined,
+  decoratorNames: string[],
+): boolean {
   return (
     node?.type === "ClassDeclaration" &&
-    (node as any).decorators?.some(isInjectableDecorator)
+    (node as any).decorators?.some((d: any) =>
+      isInjectableDecorator(d, decoratorNames),
+    )
   );
 }
 
@@ -98,7 +106,18 @@ const rule: Rule.RuleModule = {
       description:
         "Enforce NestJS-like DI patterns for needle-di modules: require @injectable() class exports, ban exported functions, module-level variables, and class fields.",
     },
-    schema: [],
+    schema: [
+      {
+        type: "object",
+        properties: {
+          injectableDecorators: {
+            type: "array",
+            items: { type: "string" },
+          },
+        },
+        additionalProperties: false,
+      },
+    ],
     messages: {
       missingInjectable:
         "DI modules must export at least one @injectable() class.",
@@ -111,6 +130,11 @@ const rule: Rule.RuleModule = {
     },
   },
   create(context) {
+    const options = context.options[0] ?? {};
+    const decoratorNames: string[] = options.injectableDecorators ?? [
+      "injectable",
+    ];
+
     return {
       // Check 1: No module-level variables
       VariableDeclaration(node) {
@@ -140,7 +164,7 @@ const rule: Rule.RuleModule = {
               bindings,
             );
 
-            if (isInjectableClass(exportedNode)) {
+            if (isInjectableClass(exportedNode, decoratorNames)) {
               hasInjectableExport = true;
             }
 
@@ -156,7 +180,7 @@ const rule: Rule.RuleModule = {
                 bindings,
               );
 
-              if (isInjectableClass(localNode)) {
+              if (isInjectableClass(localNode, decoratorNames)) {
                 hasInjectableExport = true;
               }
 
@@ -175,7 +199,7 @@ const rule: Rule.RuleModule = {
               bindings,
             );
 
-            if (isInjectableClass(exportedNode)) {
+            if (isInjectableClass(exportedNode, decoratorNames)) {
               hasInjectableExport = true;
             }
 
