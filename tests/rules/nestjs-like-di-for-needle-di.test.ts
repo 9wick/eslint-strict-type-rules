@@ -142,6 +142,47 @@ describe("nestjs-like-di-for-needle-di", () => {
     });
   });
 
+  it("should allow custom injectable decorators via options", () => {
+    ruleTester.run("nestjs-like-di-for-needle-di", rule, {
+      valid: [
+        // Custom decorator: Controller
+        {
+          code: `@Controller() export class UserController {}`,
+          options: [{ injectableDecorators: ["Controller"] }],
+        },
+        // Custom decorator: Injectable (PascalCase)
+        {
+          code: `@Injectable() export class UserService {}`,
+          options: [{ injectableDecorators: ["Injectable"] }],
+        },
+        // Multiple custom decorators
+        {
+          code: `@Service() export class UserService {}`,
+          options: [{ injectableDecorators: ["Controller", "Service", "Injectable"] }],
+        },
+        // Custom decorator without call expression
+        {
+          code: `@Controller export class UserController {}`,
+          options: [{ injectableDecorators: ["Controller"] }],
+        },
+      ],
+      invalid: [
+        // Default decorator not in custom list
+        {
+          code: `@injectable() export class UserService {}`,
+          options: [{ injectableDecorators: ["Controller"] }],
+          errors: [{ messageId: "missingInjectable" }],
+        },
+        // Unrecognized decorator
+        {
+          code: `@Unknown() export class UserService {}`,
+          options: [{ injectableDecorators: ["Controller", "Service"] }],
+          errors: [{ messageId: "missingInjectable" }],
+        },
+      ],
+    });
+  });
+
   it("should ban class fields", () => {
     ruleTester.run("nestjs-like-di-for-needle-di", rule, {
       valid: [],
