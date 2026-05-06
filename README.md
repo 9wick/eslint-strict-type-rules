@@ -1,5 +1,7 @@
 # @9wick/eslint-plugin-strict-type-rules
 
+[![npm version](https://img.shields.io/npm/v/@9wick/eslint-plugin-strict-type-rules.svg)](https://www.npmjs.com/package/@9wick/eslint-plugin-strict-type-rules)
+
 neverthrow / 型安全性 / コード品質のための厳格な ESLint ルールセット + TypeScript 最厳格設定。
 
 ## Install
