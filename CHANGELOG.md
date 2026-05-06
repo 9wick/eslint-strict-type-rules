@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.0 (2026-05-06)
+
+
+### Features
+
+* add injectableDecorators option to nestjs-like-di rule ([ae09784](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/ae09784bb7272e86320a3c5c46e2135b4c20cc60))
+* add injectableDecorators option to nestjs-like-di rule ([e742446](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/e742446232dfd4cab1b8d9102e12d56b62a6b688))
+* eslint-plugin-strict-type-rules initial implementation ([c54a9ef](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/c54a9efa4116acc82b7e2b802874fffbad68332f))
+
+
+### Bug Fixes
+
+* add release-please manifest to track current version ([e778213](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/e77821303408fddc078962c31dd64d4be821ce67))
+* add repository field and upgrade npm for OIDC publish ([a37fc30](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/a37fc30d5e12c970776e83f4b1a5b4bad91533be))
+* move permissions to job level for OIDC to work ([1e592f9](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/1e592f90092cabe8da48a0e437f3321e3c1aca26))
+* set last-release-sha to skip pre-1.0.2 commits ([2b22cf9](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/2b22cf91f415adfbff9737e8e5a6997d8cbe6e70))
+* use bootstrap-sha to skip pre-1.0.2 commits ([19e601d](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/19e601db13e482ae0c85dbaa7949034d9c7d5666))
+
 ## [1.0.2](https://github.com/9wick/eslint-plugin-strict-type-rules/compare/v1.0.1...v1.0.2) (2026-05-04)
 
 
