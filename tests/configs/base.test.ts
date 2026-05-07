@@ -98,7 +98,13 @@ describe("base config", () => {
     const diConfig = plugin.configs.base[2];
     expect(diConfig.name).toBe("@9wick/strict-type-rules/base/di");
     expect(diConfig.files).toEqual(["**/*.*.{ts,tsx}"]);
-    expect(diConfig.ignores).toEqual(["**/*.lib.{ts,tsx}"]);
+    expect(diConfig.ignores).toEqual([
+      "**/*.lib.{ts,tsx}",
+      "**/*.spec.{ts,tsx}",
+      "**/*.test.{ts,tsx}",
+      "**/*.type.{ts,tsx}",
+      "**/*.types.{ts,tsx}",
+    ]);
     expect(diConfig.rules!["@9wick/strict-type-rules/nestjs-like-di-for-needle-di"]).toBe(
       "error",
     );
