@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/9wick/eslint-plugin-strict-type-rules/compare/eslint-plugin-strict-type-rules-v1.1.0...eslint-plugin-strict-type-rules-v1.1.1) (2026-05-07)
+
+
+### Bug Fixes
+
+* exclude test and type files from DI rule ([497fff0](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/497fff0ecbcdd44a003c375803221ce4d5b5cf8e))
+* exclude test and type files from DI rule ([5a5b8fb](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/5a5b8fb5436ed97bf8b904fb786ae0efae431acd))
+
 ## [1.1.0](https://github.com/9wick/eslint-plugin-strict-type-rules/compare/eslint-plugin-strict-type-rules-v1.0.2...eslint-plugin-strict-type-rules-v1.1.0) (2026-05-06)
 
 
