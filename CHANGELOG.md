@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/9wick/eslint-plugin-strict-type-rules/compare/eslint-plugin-strict-type-rules-v1.1.1...eslint-plugin-strict-type-rules-v1.2.0) (2026-05-10)
+
+
+### Features
+
+* add allowClassFieldsInPaths option and remove DI rule from recommended ([fefd7f5](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/fefd7f5087d5282c2edf05516b373d4c63e4e073))
+* add allowClassFieldsInPaths option and remove DI rule from recommended ([25b1f8f](https://github.com/9wick/eslint-plugin-strict-type-rules/commit/25b1f8f570c19f11fe507003ccd212a0f67016a5))
+
 ## [1.1.1](https://github.com/9wick/eslint-plugin-strict-type-rules/compare/eslint-plugin-strict-type-rules-v1.1.0...eslint-plugin-strict-type-rules-v1.1.1) (2026-05-07)
 
 
