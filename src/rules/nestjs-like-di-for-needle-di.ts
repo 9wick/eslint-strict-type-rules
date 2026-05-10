@@ -1,4 +1,5 @@
 import type { Rule } from "eslint";
+import picomatch from "picomatch";
 
 function isFunctionLike(node: Rule.Node | null | undefined): boolean {
   return (
@@ -114,6 +115,10 @@ const rule: Rule.RuleModule = {
             type: "array",
             items: { type: "string" },
           },
+          allowClassFieldsInPaths: {
+            type: "array",
+            items: { type: "string" },
+          },
         },
         additionalProperties: false,
       },
@@ -134,6 +139,11 @@ const rule: Rule.RuleModule = {
     const decoratorNames: string[] = options.injectableDecorators ?? [
       "injectable",
     ];
+    const allowClassFieldsInPaths: string[] =
+      options.allowClassFieldsInPaths ?? [];
+    const isClassFieldAllowed =
+      allowClassFieldsInPaths.length > 0 &&
+      picomatch.isMatch(context.filename, allowClassFieldsInPaths);
 
     return {
       // Check 1: No module-level variables
@@ -144,8 +154,9 @@ const rule: Rule.RuleModule = {
         context.report({ node, messageId: "noModuleLevelVariable" });
       },
 
-      // Check 2: No class fields
+      // Check 2: No class fields (skip if path matches allowClassFieldsInPaths)
       PropertyDefinition(node) {
+        if (isClassFieldAllowed) return;
         context.report({ node, messageId: "noClassField" });
       },
 

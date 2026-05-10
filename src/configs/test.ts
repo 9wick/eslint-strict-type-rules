@@ -35,7 +35,6 @@ export function testConfig(plugin: ESLint.Plugin): TSESLint.FlatConfig.Config[] 
         "max-lines-per-function": "off",
         "no-console": "off",
         "@eslint-community/eslint-comments/no-use": "off",
-        "@9wick/strict-type-rules/nestjs-like-di-for-needle-di": "off",
       },
     },
     {

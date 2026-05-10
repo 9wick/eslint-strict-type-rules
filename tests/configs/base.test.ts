@@ -48,7 +48,7 @@ describe("plugin structure", () => {
 describe("base config", () => {
   it("should have 4 config entries", () => {
     expect(Array.isArray(plugin.configs.base)).toBe(true);
-    expect(plugin.configs.base).toHaveLength(4);
+    expect(plugin.configs.base).toHaveLength(3);
   });
 
   it("should include plugin in plugins", () => {
@@ -94,29 +94,13 @@ describe("base config", () => {
     expect(typeCheckedConfig.rules!["@typescript-eslint/no-unnecessary-condition"]).toBe("error");
   });
 
-  it("should scope DI rules to sub-extension files only", () => {
-    const diConfig = plugin.configs.base[2];
-    expect(diConfig.name).toBe("@9wick/strict-type-rules/base/di");
-    expect(diConfig.files).toEqual(["**/*.*.{ts,tsx}"]);
-    expect(diConfig.ignores).toEqual([
-      "**/*.lib.{ts,tsx}",
-      "**/*.spec.{ts,tsx}",
-      "**/*.test.{ts,tsx}",
-      "**/*.type.{ts,tsx}",
-      "**/*.types.{ts,tsx}",
-    ]);
-    expect(diConfig.rules!["@9wick/strict-type-rules/nestjs-like-di-for-needle-di"]).toBe(
-      "error",
-    );
-  });
-
   it("should not use no-restricted-syntax in base config", () => {
     const rules = plugin.configs.base[0].rules!;
     expect(rules["no-restricted-syntax"]).toBeUndefined();
   });
 
   it("should allow no-console in logger files", () => {
-    const loggerConfig = plugin.configs.base[3];
+    const loggerConfig = plugin.configs.base[2];
     expect(loggerConfig.files).toEqual(["**/*[lL]ogger*.{ts,tsx,js,jsx}"]);
     expect(loggerConfig.rules!["no-console"]).toBe("off");
   });
@@ -192,13 +176,6 @@ describe("test config", () => {
       "error",
       { max: 1000, skipBlankLines: true, skipComments: true },
     ]);
-  });
-
-  it("should disable DI rules for tests", () => {
-    const rules = plugin.configs.test[0].rules!;
-    expect(rules["@9wick/strict-type-rules/nestjs-like-di-for-needle-di"]).toBe(
-      "off",
-    );
   });
 
   it("should turn off strict syntax rules except no-promise-result", () => {

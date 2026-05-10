@@ -213,4 +213,51 @@ describe("nestjs-like-di-for-needle-di", () => {
       ],
     });
   });
+
+  it("should allow class fields in paths matching allowClassFieldsInPaths", () => {
+    ruleTester.run("nestjs-like-di-for-needle-di", rule, {
+      valid: [
+        // Class field allowed in infra directory
+        {
+          code: `@injectable() export class PrismaService { private prisma = new PrismaClient(); }`,
+          filename: "/src/infra/prisma.service.ts",
+          options: [{ allowClassFieldsInPaths: ["**/infra/**"] }],
+        },
+        // Class field allowed in driver directory
+        {
+          code: `@injectable() export class RedisDriver { private client = createClient(); }`,
+          filename: "/src/driver/redis.driver.ts",
+          options: [{ allowClassFieldsInPaths: ["**/driver/**"] }],
+        },
+        // Class field allowed by file extension pattern
+        {
+          code: `@injectable() export class DbDriver { private conn = connect(); }`,
+          filename: "/src/services/db.driver.ts",
+          options: [{ allowClassFieldsInPaths: ["**/*.driver.ts"] }],
+        },
+        // Multiple patterns
+        {
+          code: `@injectable() export class Adapter { private impl = create(); }`,
+          filename: "/src/adapters/http.adapter.ts",
+          options: [{ allowClassFieldsInPaths: ["**/infra/**", "**/adapters/**"] }],
+        },
+      ],
+      invalid: [
+        // Class field NOT allowed when path doesn't match
+        {
+          code: `@injectable() export class Svc { private cache = new Map(); }`,
+          filename: "/src/services/user.service.ts",
+          options: [{ allowClassFieldsInPaths: ["**/infra/**"] }],
+          errors: [{ messageId: "noClassField" }],
+        },
+        // Class field NOT allowed when no patterns provided
+        {
+          code: `@injectable() export class Svc { private cache = new Map(); }`,
+          filename: "/src/infra/prisma.service.ts",
+          options: [{}],
+          errors: [{ messageId: "noClassField" }],
+        },
+      ],
+    });
+  });
 });

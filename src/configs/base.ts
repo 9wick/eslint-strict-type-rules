@@ -97,23 +97,6 @@ export function baseConfig(plugin: ESLint.Plugin): TSESLint.FlatConfig.Config[] 
       },
     },
     {
-      name: "@9wick/strict-type-rules/base/di",
-      files: ["**/*.*.{ts,tsx}"],
-      ignores: [
-        "**/*.lib.{ts,tsx}",
-        "**/*.spec.{ts,tsx}",
-        "**/*.test.{ts,tsx}",
-        "**/*.type.{ts,tsx}",
-        "**/*.types.{ts,tsx}",
-      ],
-      plugins: {
-        "@9wick/strict-type-rules": plugin,
-      },
-      rules: {
-        "@9wick/strict-type-rules/nestjs-like-di-for-needle-di": "error",
-      },
-    },
-    {
       name: "@9wick/strict-type-rules/base/logger",
       files: ["**/*[lL]ogger*.{ts,tsx,js,jsx}"],
       rules: {
